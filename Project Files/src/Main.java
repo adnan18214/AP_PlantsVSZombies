@@ -15,7 +15,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("./FXMLs/selectPlayerMenu.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("./FXMLs/welcomeLogo.fxml"));
         primaryStage.setTitle("Plants VS Zombies - AP Project");
         primaryStage.setScene(new Scene(root));
         FadeTransition fadein = new FadeTransition(Duration.seconds(3),root);
