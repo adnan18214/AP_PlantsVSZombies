@@ -22,7 +22,7 @@
       </ImageView>
       <ImageView fitHeight="77.0" fitWidth="242.0" layoutX="401.0" layoutY="588.0" pickOnBounds="true" preserveRatio="true" scaleX="2.5" scaleY="2.5">
          <image>
-            <Image url="@../../../../../../Downloads/IMGBIN_placard-plywood-frame-and-panel-sanctuaire-la-ferme-de-doudou-png_tVeskGfv%20(8).png" />
+            <Image url="@../images/intro_B.png" />
          </image>
       </ImageView>
    </children>
