@@ -7,7 +7,7 @@
 
 <AnchorPane prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXMLs.WelcomeLogoController">
    <children>
-      <ImageView fitHeight="768.0" fitWidth="1040.0" pickOnBounds="true">
+      <ImageView fitHeight="768.0" fitWidth="1024.0" pickOnBounds="true">
          <image>
             <Image url="@../images/bgLogo.jpg" />
          </image>
@@ -23,6 +23,11 @@
       <ImageView fitHeight="77.0" fitWidth="242.0" layoutX="401.0" layoutY="588.0" pickOnBounds="true" preserveRatio="true" scaleX="2.5" scaleY="2.5">
          <image>
             <Image url="@../images/intro_B.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="shade" fitHeight="768.0" fitWidth="1024.0" pickOnBounds="true">
+         <image>
+            <Image url="@../images/transition.png" />
          </image>
       </ImageView>
    </children>

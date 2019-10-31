@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ButtonBar?>
-<?import javafx.scene.effect.Light.Distant?>
-<?import javafx.scene.effect.Lighting?>
-<?import javafx.scene.effect.Shadow?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.GaussianBlur?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -16,25 +14,21 @@
             <Image url="@../images/bgLogin.jpg" />
          </image>
          <effect>
-            <Lighting>
-               <bumpInput>
-                  <Shadow />
-               </bumpInput>
-               <light>
-                  <Light.Distant />
-               </light>
-            </Lighting>
+            <GaussianBlur radius="32.28" />
          </effect>
       </ImageView>
-      <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="149.0" fitWidth="419.0" layoutX="302.0" layoutY="324.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/enterName.png" />
          </image>
       </ImageView>
-      <ButtonBar layoutX="353.0" layoutY="297.0" prefHeight="28.0" prefWidth="200.0">
-        <buttons>
-          <Button mnemonicParsing="false" text="Enter Name" />
-        </buttons>
-      </ButtonBar>
+      <ImageView fitHeight="107.0" fitWidth="527.0" layoutX="256.0" layoutY="84.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/logo2.png" />
+         </image>
+      </ImageView>
+      <Button layoutX="451.0" layoutY="492.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="121.0" stylesheets="@setButtonStyle.css" text="Submit" />
+      <TextField layoutX="421.0" layoutY="389.0" prefHeight="26.0" prefWidth="192.0" styleClass="text-field" stylesheets="@setButtonStyle.css" />
+      <Button layoutX="451.0" layoutY="560.0" mnemonicParsing="false" onAction="#goBackToLogin" prefHeight="44.0" prefWidth="121.0" stylesheets="@setButtonStyle.css" text="Back" />
    </children>
 </AnchorPane>
