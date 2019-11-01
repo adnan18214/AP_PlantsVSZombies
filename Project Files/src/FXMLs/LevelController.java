@@ -6,6 +6,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.effect.Glow;
@@ -20,15 +21,13 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class SelectPlayerMenuController implements Initializable {
+public class LevelController implements Initializable{
     @FXML
-    private ImageView existingPlayer;
+    private ImageView level1;
     @FXML
-    private ImageView playGuest;
+    private ImageView level2;
     @FXML
-    private ImageView newPlayer;
-    @FXML
-    private ImageView exitButton;
+    private ImageView level3;
     @FXML
     private ImageView shade;
 
@@ -50,15 +49,9 @@ public class SelectPlayerMenuController implements Initializable {
         button.setEffect(new InnerShadow());
     }
 
-    @FXML
-    private void endGame(MouseEvent mouseEvent) throws IOException {
-        ImageView button = (ImageView) mouseEvent.getSource();
-        button.setEffect(null);
-        Platform.exit();
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         ScaleTransition open  = new ScaleTransition(Duration.seconds(2), shade);
         open.setByX(80);
         open.setByY(75);
@@ -66,20 +59,5 @@ public class SelectPlayerMenuController implements Initializable {
         open.setOnFinished((e)-> {
             shade.setVisible(false);
         });
-    }
-
-    @FXML
-    private void enterPlayerName(MouseEvent mouseEvent) {
-        ImageView button = (ImageView) mouseEvent.getSource();
-        button.setEffect(null);
-
-        try {
-            Parent next = FXMLLoader.load(getClass().getClassLoader().getResource("./FXMLs/enterName.fxml"));
-            Stage primaryStage = (Stage) ((ImageView) mouseEvent.getSource()).getScene().getWindow();
-            Main.saveScene(primaryStage.getScene());
-            primaryStage.setScene(new Scene(next));
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
     }
 }

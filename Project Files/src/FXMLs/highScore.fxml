@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.GaussianBlur?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXMLs.HighScore">
+   <children>
+      <ImageView fitHeight="768.0" fitWidth="1024.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/bgLogin.jpg" />
+         </image>
+         <effect>
+            <GaussianBlur />
+         </effect>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="412.0" layoutY="87.0" pickOnBounds="true" preserveRatio="true" scaleX="1.5" scaleY="1.5">
+         <image>
+            <Image url="@../images/logo2.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="300.0" layoutX="360.0" layoutY="178.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/myhighscore_temp.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="250.0" layoutX="389.0" layoutY="300.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/leaderboard.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="250.0" layoutX="250.0" layoutY="354.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/adnan.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="250.0" layoutX="250.0" layoutY="404.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/adwit.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="250.0" layoutX="250.0" layoutY="454.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/Dhruv.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="250.0" layoutX="250.0" layoutY="504.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/sargam.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="250.0" layoutX="250.0" layoutY="554.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/nishant.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="250.0" layoutX="540.0" layoutY="404.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/s3.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="250.0" layoutX="540.0" layoutY="354.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/s4.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="250.0" layoutX="540.0" layoutY="454.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/s2.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="250.0" layoutX="540.0" layoutY="504.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/s2.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="250.0" layoutX="540.0" layoutY="554.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/s1.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

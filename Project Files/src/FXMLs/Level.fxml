@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.effect.GaussianBlur?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXMLs.LevelController">
+   <children>
+      <ImageView fitHeight="768.0" fitWidth="1024.0">
+         <image>
+            <Image url="@../images/Levelbg.png" />
+         </image>
+         <effect>
+            <GaussianBlur />
+         </effect>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="419.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true" scaleX="1.5" scaleY="1.5">
+         <image>
+            <Image url="@../images/logo2.png" />
+         </image>
+         <effect>
+            <Blend />
+         </effect>
+      </ImageView>
+      <ImageView fitHeight="200.0" fitWidth="300.0" layoutX="369.0" layoutY="238.0" onMouseEntered="#makeGlow" onMouseExited="#removeEffect" onMousePressed="#makeDark" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/level1.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="200.0" fitWidth="300.0" layoutX="370.0" layoutY="372.0" onMouseEntered="#makeGlow" onMouseExited="#removeEffect" onMousePressed="#makeDark" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/level2.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="200.0" fitWidth="300.0" layoutX="368.0" layoutY="504.0" onMouseEntered="#makeGlow" onMouseExited="#removeEffect" onMousePressed="#makeDark" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/level3.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

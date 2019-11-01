@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.effect.GaussianBlur?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXMLs.EnterNameController">
+   <children>
+      <ImageView fitHeight="768.0" fitWidth="1024.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/bgLogin.jpg" />
+         </image>
+         <effect>
+            <GaussianBlur radius="32.28" />
+         </effect>
+      </ImageView>
+      <ImageView fitHeight="149.0" fitWidth="419.0" layoutX="319.0" layoutY="316.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/sureexit.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="107.0" fitWidth="527.0" layoutX="256.0" layoutY="84.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/logo2.png" />
+         </image>
+      </ImageView>
+      <Button layoutX="430.0" layoutY="402.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="90.0" stylesheets="@setButtonStyle.css" text="YES" />
+      <Button layoutX="546.0" layoutY="402.0" mnemonicParsing="false" onAction="#goBackToLogin" prefHeight="35.0" prefWidth="90.0" stylesheets="@setButtonStyle.css" text="NO" />
+   </children>
+</AnchorPane>
