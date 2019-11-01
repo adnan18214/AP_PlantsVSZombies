@@ -40,7 +40,7 @@
             <Image url="@../images/highScores.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="startGame" fitHeight="106.0" fitWidth="345.0" layoutX="346.0" layoutY="216.0" onMouseEntered="#makeGlow" onMouseExited="#removeEffect" onMousePressed="#makeDark" onMouseReleased="#removeEffect" pickOnBounds="true">
+      <ImageView fx:id="startGame" fitHeight="106.0" fitWidth="345.0" layoutX="346.0" layoutY="216.0" onMouseEntered="#makeGlow" onMouseExited="#removeEffect" onMousePressed="#makeDark" onMouseReleased="#startGame" pickOnBounds="true">
          <image>
             <Image url="@../images/startGame.png" />
          </image>

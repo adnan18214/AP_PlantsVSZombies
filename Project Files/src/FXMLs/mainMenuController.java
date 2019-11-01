@@ -111,4 +111,23 @@ public class mainMenuController implements Initializable {
             }
         });
     }
+
+    @FXML
+    private void startGame(MouseEvent mouseEvent) {
+        ScaleTransition close  = new ScaleTransition(Duration.seconds(1), shade);
+        close.setByX(-78);
+        close.setByY(-73);
+        shade.setVisible(true);
+        close.play();
+
+        close.setOnFinished((e)-> {
+            try {
+                Parent next = FXMLLoader.load(getClass().getClassLoader().getResource("./FXMLs/houseAndLawn.fxml"));
+                Stage primaryStage = (Stage) shade.getScene().getWindow();
+                primaryStage.setScene(new Scene(next));
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+    }
 }
