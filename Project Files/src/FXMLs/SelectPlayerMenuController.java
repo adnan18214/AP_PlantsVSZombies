@@ -12,7 +12,6 @@ import javafx.scene.effect.Glow;
 import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -54,7 +53,15 @@ public class SelectPlayerMenuController implements Initializable {
     private void endGame(MouseEvent mouseEvent) throws IOException {
         ImageView button = (ImageView) mouseEvent.getSource();
         button.setEffect(null);
-        Platform.exit();
+
+        try {
+            Parent next = FXMLLoader.load(getClass().getClassLoader().getResource("./FXMLs/confirmExit.fxml"));
+            Stage primaryStage = (Stage) ((ImageView) mouseEvent.getSource()).getScene().getWindow();
+            Main.saveScene(primaryStage.getScene());
+            primaryStage.setScene(new Scene(next));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override
@@ -81,5 +88,24 @@ public class SelectPlayerMenuController implements Initializable {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+    }
+
+    @FXML
+    private void goToMainMenu(MouseEvent mouseEvent) {
+        ScaleTransition close  = new ScaleTransition(Duration.seconds(1), shade);
+        close.setByX(-78);
+        close.setByY(-73);
+        shade.setVisible(true);
+        close.play();
+
+        close.setOnFinished((e)-> {
+            try {
+                Parent next = FXMLLoader.load(getClass().getClassLoader().getResource("./FXMLs/mainMenu.fxml"));
+                Stage primaryStage = (Stage) shade.getScene().getWindow();
+                primaryStage.setScene(new Scene(next));
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
     }
 }
