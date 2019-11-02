@@ -7,6 +7,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Line;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 import java.net.URL;
@@ -16,7 +17,6 @@ import java.util.concurrent.ThreadLocalRandom;
 public class HouseAndLawnController implements Initializable {
     @FXML
     private ImageView shade;
-
     @FXML
     private ImageView sunToken;
     @FXML
@@ -27,6 +27,11 @@ public class HouseAndLawnController implements Initializable {
     private ImageView pea1;
     @FXML
     private ImageView lawnMower5;
+    @FXML
+    private Text countDown;
+
+    private static final Integer WAVETIME = 20;
+    private Integer timeSeconds = WAVETIME;
 
     private void animateZombie(Image moving, Image dying, int x, int y){
         ImageView zombie = new ImageView(moving);
@@ -106,6 +111,19 @@ public class HouseAndLawnController implements Initializable {
 
         }));
         timeline.setCycleCount(10);
+
+        countDown.setText(timeSeconds.toString());
+        Timeline counter = new Timeline(new KeyFrame(Duration.seconds(1), actionEvent -> {
+            countDown.setText(timeSeconds.toString());
+            timeSeconds--;
+            if(timeSeconds < 0){
+                countDown.setText("NEXT WAVE");
+                if(timeSeconds < -3)
+                    timeSeconds = WAVETIME;
+            }
+        }));
+        counter.setCycleCount(Timeline.INDEFINITE);
+
         open.play();
         open.setOnFinished((e)-> {
             shade.setVisible(false);
@@ -114,6 +132,7 @@ public class HouseAndLawnController implements Initializable {
             animatePea(pea2);
             animateLawnMower(lawnMower5);
             timeline.play();
+            counter.play();
         });
 
     }
