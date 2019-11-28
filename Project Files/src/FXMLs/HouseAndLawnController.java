@@ -5,14 +5,16 @@ import javafx.animation.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.effect.Glow;
 import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -46,6 +48,7 @@ public class HouseAndLawnController implements Initializable {
     private Timeline counter;
     private ParallelTransition allTempTransitions;
     private PathTransition moveSun;
+    private boolean dragSuccessful;
 
     private void animateZombie(Image moving, Image dying, int x, int y){
         ImageView zombie = new ImageView(moving);
@@ -156,7 +159,8 @@ public class HouseAndLawnController implements Initializable {
 
     public void makeGlow(MouseEvent mouseEvent) {
         ImageView button = (ImageView) mouseEvent.getSource();
-        button.setEffect(new Glow(0.5));
+        if(!button.getImage().getUrl().contains("inactive"))
+            button.setEffect(new Glow(0.5));
     }
 
     public void removeEffect(MouseEvent mouseEvent) {
@@ -166,7 +170,8 @@ public class HouseAndLawnController implements Initializable {
 
     public void makeDark(MouseEvent mouseEvent) {
         ImageView button = (ImageView) mouseEvent.getSource();
-        button.setEffect(new InnerShadow());
+        if(!button.getImage().getUrl().contains("inactive"))
+            button.setEffect(new InnerShadow());
     }
 
     public void pauseGame(MouseEvent mouseEvent) {
@@ -177,10 +182,10 @@ public class HouseAndLawnController implements Initializable {
         try {
             Stage primaryStage = (Stage) ((ImageView) mouseEvent.getSource()).getScene().getWindow();
             Parent next = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("./FXMLs/pausemenu.fxml")));
-//            zombieAnimation.pause();
-//            moveSun.pause();
-//            counter.pause();
-//            allTempTransitions.pause();
+            zombieAnimation.pause();
+            moveSun.pause();
+            counter.pause();
+            allTempTransitions.pause();
 
             Main.saveScene(primaryStage.getScene());
             primaryStage.setScene(new Scene(next));
@@ -189,11 +194,67 @@ public class HouseAndLawnController implements Initializable {
         }
     }
 
-//    public void resumeAnimations(){
-//        zombieAnimation.play();
-//        moveSun.play();
-//        counter.play();
-//        allTempTransitions.play();
-//    }
+    public void resumeAnimations(){
+        zombieAnimation.play();
+        moveSun.play();
+        counter.play();
+        allTempTransitions.play();
+    }
 
+    @FXML
+    private void manageDragDetected(MouseEvent mouseEvent) {
+        dragSuccessful = false;
+        ImageView source = (ImageView) mouseEvent.getSource();
+        if(!source.getImage().getUrl().contains("inactive")) {
+            Dragboard db = source.startDragAndDrop(TransferMode.ANY);
+
+            ClipboardContent cbContent = new ClipboardContent();
+            cbContent.putImage(source.getImage());
+            cbContent.putString(source.getImage().getUrl());
+            db.setContent(cbContent);
+        }
+        mouseEvent.consume();
+    }
+
+    @FXML
+    private void manageDragOver(DragEvent dragEvent) {
+        if(dragEvent.getDragboard().hasImage()){
+            dragEvent.acceptTransferModes(TransferMode.ANY);
+        }
+    }
+
+    @FXML
+    private void manageDragDrop(DragEvent dragEvent) {
+        String location = dragEvent.getDragboard().getString();
+        location = location.replace("active_","");
+        location = location.replace("png","gif");
+        Image CharacterGIF = new Image(location);
+        ImageView target = (ImageView) dragEvent.getTarget();
+        target.setImage(CharacterGIF);
+        dragSuccessful = true;
+
+        if(location.contains("peashooter")){
+            ImageView p = new ImageView(new Image("./images/Pea.png"));
+
+            int r = GridPane.getRowIndex(target);
+            int c = GridPane.getColumnIndex(target);
+            GridPane g = (GridPane) target.getParent();
+
+//            ((GridPane) target.getParent()).add(p,c,r);
+            p.setX(g.getLayoutX() + c*g.getHeight()/g.getRowCount() + 72);
+            p.setY(g.getLayoutY() + (r-1)*g.getWidth()/g.getColumnCount() + 32);
+            ((AnchorPane) target.getParent().getParent()).getChildren().add(p);
+//            p.toFront();
+        }
+    }
+
+    @FXML
+    private void manageDragDone(DragEvent dragEvent) {
+        if(dragSuccessful){
+            String url = ((ImageView) dragEvent.getSource()).getImage().getUrl();
+            url = url.replace("active", "inactive");
+            ((ImageView) dragEvent.getSource()).setImage(new Image(url));
+            dragSuccessful = false;
+        }
+    }
 }

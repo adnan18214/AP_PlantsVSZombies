@@ -28,7 +28,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         scenes = new Stack<>();
-        Parent root = FXMLLoader.load(getClass().getResource("../FXMLs/welcomeLogo.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("../FXMLs/houseAndLawn.fxml"));
         primaryStage.setTitle("Plants VS Zombies - AP Project");
         primaryStage.setScene(new Scene(root));
         primaryStage.setResizable(false);

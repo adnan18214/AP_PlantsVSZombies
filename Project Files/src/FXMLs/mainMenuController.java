@@ -122,9 +122,13 @@ public class mainMenuController implements Initializable {
 
         close.setOnFinished((e)-> {
             try {
-                Parent next = FXMLLoader.load(getClass().getClassLoader().getResource("./FXMLs/houseAndLawn.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("./FXMLs/houseAndLawn.fxml"));
+                Parent next = loader.load();
                 Stage primaryStage = (Stage) shade.getScene().getWindow();
-                primaryStage.setScene(new Scene(next));
+
+                Scene nextScene = new Scene(next);
+                nextScene.setUserData(loader);
+                primaryStage.setScene(nextScene);
             } catch (IOException ex) {
                 ex.printStackTrace();
             }

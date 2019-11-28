@@ -68,6 +68,9 @@ public class pausemenuController implements Initializable {
         Node source = (Node) mouseEvent.getSource();
         Stage primaryStage = (Stage) source.getScene().getWindow();
         primaryStage.setScene(Main.getLastScene());
+        FXMLLoader l = (FXMLLoader) primaryStage.getScene().getUserData();
+        HouseAndLawnController h = l.getController();
+        h.resumeAnimations();
     }
 
     public void restartGame(MouseEvent mouseEvent) {
