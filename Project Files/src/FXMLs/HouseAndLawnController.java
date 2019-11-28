@@ -30,13 +30,7 @@ public class HouseAndLawnController implements Initializable {
     @FXML
     private ImageView shade;
     @FXML
-    private ImageView sunToken;
-    @FXML
     private AnchorPane animationLayer;
-    @FXML
-    private ImageView pea2;
-    @FXML
-    private ImageView pea1;
     @FXML
     private ImageView lawnMower5;
     @FXML
@@ -49,6 +43,8 @@ public class HouseAndLawnController implements Initializable {
     private ParallelTransition allTempTransitions;
     private PathTransition moveSun;
     private boolean dragSuccessful;
+    @FXML
+    private Text sunTokenCount;
 
     private void animateZombie(Image moving, Image dying, int x, int y){
         ImageView zombie = new ImageView(moving);
@@ -78,18 +74,37 @@ public class HouseAndLawnController implements Initializable {
 
     private void animateSunToken(){
         moveSun = new PathTransition();
-        double x = sunToken.getX();
-        double y = sunToken.getY();
+        Image sun = new Image("./images/sunToken.gif");
+
+        ImageView sunToken = new ImageView(sun);
+        double x = ThreadLocalRandom.current().nextDouble(200,850);
+        double y = 105;
+        sunToken.setX(x);
+        sunToken.setY(y);
+        sunToken.setFitWidth(64);
+        sunToken.setFitHeight(58);
+
+        sunToken.setOnMouseClicked((e)-> {
+            sunToken.setImage(null);
+            int count = Integer.parseInt(sunTokenCount.getText());
+            count += 50;
+            sunTokenCount.setText(Integer.toString(count));
+        });
+
         Line sPath = new Line(x, y+10, x, y+800);
         moveSun.setNode(sunToken);
         moveSun.setPath(sPath);
         moveSun.setDuration(Duration.seconds(5));
         moveSun.setCycleCount(1);
         moveSun.setDelay(Duration.seconds(3));
+        animationLayer.getChildren().add(sunToken);
 
         moveSun.setOnFinished(e -> {
-            double newX = ThreadLocalRandom.current().nextDouble(550);
+            double newX = ThreadLocalRandom.current().nextDouble(200,850);
             moveSun.setPath(new Line(newX, y+10, newX, y+800));
+            moveSun.setDelay(Duration.seconds(ThreadLocalRandom.current().nextInt(2,6)));
+            if(sunToken.getImage() == null)
+                sunToken.setImage(sun);
             moveSun.play();
         });
         moveSun.play();
@@ -105,15 +120,15 @@ public class HouseAndLawnController implements Initializable {
         return movePea;
     }
 
-    private PathTransition animateLawnMower(ImageView LM){
+    private void animateLawnMower(ImageView LM){
         PathTransition moveLM = new PathTransition();
         Line lmPath = new Line(LM.getX()+20, LM.getY()+30, LM.getX()+1400, LM.getY()+30);
         moveLM.setNode(LM);
         moveLM.setPath(lmPath);
         moveLM.setDuration(Duration.seconds(4));
-        moveLM.setDelay(Duration.seconds(4));
-        moveLM.setCycleCount(Timeline.INDEFINITE);
-        return moveLM;
+//        moveLM.setDelay(Duration.seconds(4));
+        moveLM.setCycleCount(1);
+        moveLM.play();
     }
 
     @Override
@@ -144,11 +159,8 @@ public class HouseAndLawnController implements Initializable {
         open.play();
         open.setOnFinished((e)-> {
             shade.setVisible(false);
-            allTempTransitions = new ParallelTransition(animatePea(pea1), animatePea(pea2), animateLawnMower(lawnMower5));
+            allTempTransitions = new ParallelTransition();
             animateSunToken();
-//            animatePea(pea1);
-//            animatePea(pea2);
-//            animateLawnMower(lawnMower5);
             allTempTransitions.play();
             zombieAnimation.play();
             counter.play();
@@ -233,18 +245,26 @@ public class HouseAndLawnController implements Initializable {
         target.setImage(CharacterGIF);
         dragSuccessful = true;
 
-        if(location.contains("peashooter")){
-            ImageView p = new ImageView(new Image("./images/Pea.png"));
+        if(location.contains("peashooter") || location.contains("beetroot")){
+            ImageView p;
+            if(location.contains("peashooter"))
+                p = new ImageView(new Image("./images/Pea.png"));
+            else
+                p = new ImageView(new Image("./images/beetbullet.png"));
 
             int r = GridPane.getRowIndex(target);
             int c = GridPane.getColumnIndex(target);
             GridPane g = (GridPane) target.getParent();
 
-//            ((GridPane) target.getParent()).add(p,c,r);
-            p.setX(g.getLayoutX() + c*g.getHeight()/g.getRowCount() + 72);
-            p.setY(g.getLayoutY() + (r-1)*g.getWidth()/g.getColumnCount() + 32);
+            p.setX(g.getLayoutX() + (c-1)*90 + 69);
+            if(location.contains("peashooter"))
+                p.setY(g.getLayoutY() + (r-1)*109 + 37);
+            else
+                p.setY(g.getLayoutY() + (r-1)*109 + 62);
             ((AnchorPane) target.getParent().getParent()).getChildren().add(p);
-//            p.toFront();
+            PathTransition pAnimate = animatePea(p);
+            pAnimate.play();
+            allTempTransitions.getChildren().add(pAnimate);
         }
     }
 
@@ -256,5 +276,10 @@ public class HouseAndLawnController implements Initializable {
             ((ImageView) dragEvent.getSource()).setImage(new Image(url));
             dragSuccessful = false;
         }
+    }
+
+    @FXML
+    private void testLawnMower(MouseEvent mouseEvent) {
+        animateLawnMower((ImageView) mouseEvent.getSource());
     }
 }
