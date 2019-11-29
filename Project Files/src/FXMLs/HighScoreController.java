@@ -1,6 +1,6 @@
 package FXMLs;
 
-import gameRunner.Main;
+import allClasses.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;

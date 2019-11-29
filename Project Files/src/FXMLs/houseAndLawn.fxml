@@ -46,7 +46,7 @@
             <Image url="@../images/lawnMower.png" />
          </image>
       </ImageView>
-      <GridPane alignment="CENTER_RIGHT" layoutX="152.0" layoutY="186.0" prefHeight="542.0" prefWidth="806.0">
+      <GridPane fx:id="gardenGRID" alignment="CENTER_RIGHT" layoutX="152.0" layoutY="186.0" prefHeight="542.0" prefWidth="806.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="74.0" minWidth="0.0" prefWidth="0.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="160.0" minWidth="10.0" prefWidth="88.0" />
@@ -166,5 +166,10 @@
             <Font size="30.0" />
          </font>
       </Text>
+      <ImageView fx:id="shovel" fitHeight="78.0" fitWidth="49.0" layoutX="128.0" layoutY="113.0" onMouseClicked="#activateShovelAction" onMouseEntered="#makeGlow" onMouseExited="#removeEffect" onMousePressed="#makeDark" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/shovel.jpg" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

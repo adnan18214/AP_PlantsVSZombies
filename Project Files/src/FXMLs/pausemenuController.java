@@ -1,6 +1,6 @@
 package FXMLs;
 
-import gameRunner.Main;
+import allClasses.Main;
 import javafx.animation.ScaleTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

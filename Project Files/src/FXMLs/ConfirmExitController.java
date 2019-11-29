@@ -1,6 +1,6 @@
 package FXMLs;
 
-import gameRunner.Main;
+import allClasses.Main;
 import javafx.animation.ScaleTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
