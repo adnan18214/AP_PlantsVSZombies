@@ -1,9 +1,6 @@
 package FXMLs;
 
-import allClasses.BeetRoot;
-import allClasses.Main;
-import allClasses.PeaShooter;
-import allClasses.shooterPlant;
+import allClasses.*;
 import javafx.animation.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -46,6 +43,7 @@ public class HouseAndLawnController implements Initializable {
     private PathTransition moveSun;
     private boolean dragSuccessful;
     private boolean shovelActivated;
+    private Lawn lawn;
     @FXML
     private Text sunTokenCount;
     @FXML
@@ -81,40 +79,35 @@ public class HouseAndLawnController implements Initializable {
 
     private void animateSunToken(){
         moveSun = new PathTransition();
-        Image sun = new Image("./images/sunToken.gif");
-
-        ImageView sunToken = new ImageView(sun);
         double x = ThreadLocalRandom.current().nextDouble(200,850);
         double y = 105;
-        sunToken.setX(x);
-        sunToken.setY(y);
-        sunToken.setFitWidth(64);
-        sunToken.setFitHeight(58);
+        SunToken s = new SunToken(sunTokenCount);
+        ImageView sunToken = s.getSuntoken(x,y);
 
-        sunToken.setOnMouseClicked((e)-> {
-            sunToken.setImage(null);
-            int count = Integer.parseInt(sunTokenCount.getText());
-            count += 50;
-            sunTokenCount.setText(Integer.toString(count));
-        });
-
-        Line sPath = new Line(x, y+10, x, y+800);
+        Line sPath = new Line(x+32, y+29, x+32, y+800);
         moveSun.setNode(sunToken);
         moveSun.setPath(sPath);
         moveSun.setDuration(Duration.seconds(5));
         moveSun.setCycleCount(1);
         moveSun.setDelay(Duration.seconds(3));
         animationLayer.getChildren().add(sunToken);
+        sunToken.setOpacity(0);
+
+        FadeTransition appearToken = new FadeTransition(Duration.seconds(2), sunToken);
+        appearToken.setToValue(1);
+        appearToken.setCycleCount(1);
+        appearToken.play();
 
         moveSun.setOnFinished(e -> {
             double newX = ThreadLocalRandom.current().nextDouble(200,850);
             moveSun.setPath(new Line(newX, y+10, newX, y+800));
-            moveSun.setDelay(Duration.seconds(ThreadLocalRandom.current().nextInt(2,6)));
+            moveSun.setDelay(Duration.seconds(ThreadLocalRandom.current().nextInt(5,10)));
             if(sunToken.getImage() == null)
-                sunToken.setImage(sun);
+                sunToken.setImage(s.getSunImage());
             moveSun.play();
         });
         moveSun.play();
+
     }
 
     private void animateLawnMower(ImageView LM){
@@ -131,6 +124,8 @@ public class HouseAndLawnController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         shovelActivated = false;
+        lawn = Lawn.getLawn();
+
         ScaleTransition open  = new ScaleTransition(Duration.seconds(2), shade);
         open.setByX(80);
         open.setByY(75);
@@ -215,14 +210,7 @@ public class HouseAndLawnController implements Initializable {
     private void manageDragDetected(MouseEvent mouseEvent) {
         dragSuccessful = false;
         ImageView source = (ImageView) mouseEvent.getSource();
-        if(source.getImage().getUrl().contains("shovel")){
-            Dragboard db = source.startDragAndDrop(TransferMode.ANY);
-
-            ClipboardContent cbContent = new ClipboardContent();
-            cbContent.putImage(source.getImage());
-            cbContent.putString(source.getImage().getUrl());
-            db.setContent(cbContent);
-        }else if(!source.getImage().getUrl().contains("inactive")) {
+        if(source.getImage().getUrl().contains("shovel") || !source.getImage().getUrl().contains("inactive")){
             Dragboard db = source.startDragAndDrop(TransferMode.ANY);
 
             ClipboardContent cbContent = new ClipboardContent();
@@ -230,6 +218,14 @@ public class HouseAndLawnController implements Initializable {
             cbContent.putString(source.getImage().getUrl());
             db.setContent(cbContent);
         }
+//        else if()) {
+//            Dragboard db = source.startDragAndDrop(TransferMode.ANY);
+//
+//            ClipboardContent cbContent = new ClipboardContent();
+//            cbContent.putImage(source.getImage());
+//            cbContent.putString(source.getImage().getUrl());
+//            db.setContent(cbContent);
+//        }
         mouseEvent.consume();
     }
 
@@ -242,54 +238,54 @@ public class HouseAndLawnController implements Initializable {
 
     @FXML
     private void manageDragDrop(DragEvent dragEvent) {
+        ImageView target = (ImageView) dragEvent.getTarget();
         if(dragEvent.getDragboard().getString().contains("shovel")){
-            ImageView target = (ImageView) dragEvent.getTarget();
             if(gardenGRID.getChildren().contains(target)){
                 target.setImage(null);
+                Plant p = lawn.getPlant(GridPane.getColumnIndex(target), GridPane.getRowIndex(target));
+                lawn.removePlant(p);
+                if(p instanceof shooterPlant){
+                    removeFromAnimationGroup(((shooterPlant) p).getAnimation());
+                } else if(p instanceof SunFlower){
+                    removeFromAnimationGroup(((SunFlower) p).getAnimation());
+                }
+                p.killPlant();
             }
         } else {
             String location = dragEvent.getDragboard().getString();
-//            location = location.replace("active_", "");
-//            location = location.replace("png", "gif");
-//            Image CharacterGIF = new Image(location);
-//            ImageView target = (ImageView) dragEvent.getTarget();
-//            target.setImage(CharacterGIF);
             if(location.contains("peashooter") || location.contains("beetroot")){
                 shooterPlant p;
                 if(location.contains("peashooter"))
-                    p = new PeaShooter();
+                    p = new PeaShooter(GridPane.getColumnIndex(target), GridPane.getRowIndex(target));
                 else
-                    p = new BeetRoot();
+                    p = new BeetRoot(GridPane.getColumnIndex(target), GridPane.getRowIndex(target));
 
-                ImageView target = (ImageView) dragEvent.getTarget();
                 target.setImage(p.getAliveGIF());
                 addToAnimationGroup(p.shootBullets(target));
+                lawn.addPlant((Plant) p);
+//                ImageView x = p.getBullet();
+//                new AnimationTimer() {
+//                    @Override
+//                    public void handle(long now){
+//                        System.out.println(x.getBoundsInParent());
+//                    }
+//                }.start();
+
             } else {
-                // POTATO and SUNFLOWER
+                if(location.contains("walnut")){
+                    Walnut w = new Walnut(GridPane.getColumnIndex(target), GridPane.getRowIndex(target));
+                    target.setImage(w.getFullHealthGIF());
+                    lawn.addPlant(w);
+                } else if(location.contains("sunflower")){
+                    SunFlower s = new SunFlower(GridPane.getColumnIndex(target), GridPane.getRowIndex(target), sunTokenCount, target);
+                    target.setImage(s.getAliveGIF());
+                    SequentialTransition tokengen = s.generateTokens(sunTokenCount);
+                    tokengen.play();
+//                    addToAnimationGroup(tokengen);
+                    lawn.addPlant(s);
+                }
             }
             dragSuccessful = true;
-//
-//            if (location.contains("peashooter") || location.contains("beetroot")) {
-//                ImageView p;
-//                if (location.contains("peashooter"))
-//                    p = new ImageView(new Image("./images/Pea.png"));
-//                else
-//                    p = new ImageView(new Image("./images/beetbullet.png"));
-//
-//                int r = GridPane.getRowIndex(target);
-//                int c = GridPane.getColumnIndex(target);
-//                GridPane g = (GridPane) target.getParent();
-//
-//                p.setX(g.getLayoutX() + (c - 1) * 90 + 69);
-//                if (location.contains("peashooter"))
-//                    p.setY(g.getLayoutY() + (r - 1) * 109 + 37);
-//                else
-//                    p.setY(g.getLayoutY() + (r - 1) * 109 + 62);
-//                ((AnchorPane) target.getParent().getParent()).getChildren().add(p);
-//                PathTransition pAnimate = animatePea(p);
-//                pAnimate.play();
-//                allTempTransitions.getChildren().add(pAnimate);
-//            }
         }
     }
 
@@ -316,5 +312,9 @@ public class HouseAndLawnController implements Initializable {
 
     private void addToAnimationGroup(Animation a){
         allTempTransitions.getChildren().add(a);
+    }
+
+    private void removeFromAnimationGroup(Animation a){
+        allTempTransitions.getChildren().remove(a);
     }
 }

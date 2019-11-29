@@ -166,9 +166,9 @@
             <Font size="30.0" />
          </font>
       </Text>
-      <ImageView fx:id="shovel" fitHeight="78.0" fitWidth="49.0" layoutX="128.0" layoutY="113.0" onMouseClicked="#activateShovelAction" onMouseEntered="#makeGlow" onMouseExited="#removeEffect" onMousePressed="#makeDark" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="shovel" fitHeight="78.0" fitWidth="49.0" layoutX="128.0" layoutY="113.0" onDragDetected="#manageDragDetected" onMouseDragged="#makeDark" onMouseEntered="#makeGlow" onMouseExited="#removeEffect" onMousePressed="#makeDark" onMouseReleased="#removeEffect" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../images/shovel.jpg" />
+            <Image url="@../images/shovel.png" />
          </image>
       </ImageView>
    </children>

@@ -9,13 +9,16 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Line;
 import javafx.util.Duration;
 
-public class PeaShooter implements shooterPlant{
+public class PeaShooter extends Plant implements shooterPlant{
     private Image aliveGIF;
     private Image dyingGIF;
     private Image peaBullet;
+    private ImageView bulletIV;
+    private AnchorPane pane;
     private PathTransition movingBullet;
 
-    public PeaShooter(){
+    public PeaShooter(int x, int y){
+        super(100, x, y);
         aliveGIF = new Image("images/peashooter.gif");
         dyingGIF = new Image("images/peashooter_dying.gif");
         peaBullet = new Image("images/Pea.png");
@@ -29,21 +32,31 @@ public class PeaShooter implements shooterPlant{
         return dyingGIF;
     }
 
+    /**
+     * Creates animated bullets.
+     * @param target represents ImageView where plant is dropped.
+     * @return movingBullet represents the animation.
+     */
     public PathTransition shootBullets(ImageView target) {
         int row = GridPane.getRowIndex(target);
         int col = GridPane.getColumnIndex(target);
         GridPane g = (GridPane) target.getParent();
-        ImageView p = new ImageView(peaBullet);
+        bulletIV = new ImageView(peaBullet);
 
-        p.setX(g.getLayoutX() + (col - 1) * 90 + 69);
-        p.setY(g.getLayoutY() + (row - 1) * 109 + 37);
+        bulletIV.setX(g.getLayoutX() + (col - 1) * 90 + 69);
+        bulletIV.setY(g.getLayoutY() + (row - 1) * 109 + 37);
 
-        ((AnchorPane) target.getParent().getParent()).getChildren().add(p);
-        animatePea(p);
+        pane = (AnchorPane) target.getParent().getParent();
+        pane.getChildren().add(bulletIV);
+        animatePea(bulletIV);
         movingBullet.play();
         return movingBullet;
     }
 
+    /**
+     * Sets the default PathTransition animation of bullet moving.
+     * @param PEA represents the bullet image.
+     */
     private void animatePea(ImageView PEA){
         PathTransition movePea = new PathTransition();
         Line pPath = new Line(PEA.getX(), PEA.getY()+5, PEA.getX()+1000, PEA.getY()+5);
@@ -52,5 +65,19 @@ public class PeaShooter implements shooterPlant{
         movePea.setDuration(Duration.seconds(2));
         movePea.setCycleCount(Timeline.INDEFINITE);
         movingBullet = movePea;
+    }
+
+    @Override
+    public void killPlant() {
+        movingBullet.stop();
+        pane.getChildren().remove(bulletIV);
+    }
+
+    public PathTransition getAnimation() {
+        return movingBullet;
+    }
+
+    public ImageView getBullet() {
+        return bulletIV;
     }
 }

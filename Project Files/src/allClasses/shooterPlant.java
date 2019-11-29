@@ -7,5 +7,7 @@ import javafx.scene.image.ImageView;
 public interface shooterPlant {
     public Image getAliveGIF();
     public Image getDyingGIF();
+    public ImageView getBullet();
+    public PathTransition getAnimation();
     public PathTransition shootBullets(ImageView target);
 }
