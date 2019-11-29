@@ -21,7 +21,9 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -32,6 +34,14 @@ public class HouseAndLawnController implements Initializable {
     private AnchorPane animationLayer;
     @FXML
     private ImageView lawnMower5;
+    @FXML
+    private ImageView lawnMower4;
+    @FXML
+    private ImageView lawnMower3;
+    @FXML
+    private ImageView lawnMower2;
+    @FXML
+    private ImageView lawnMower1;
     @FXML
     private Text countDown;
 
@@ -50,18 +60,33 @@ public class HouseAndLawnController implements Initializable {
     private ImageView shovel;
     @FXML
     private GridPane gardenGRID;
+    public ArrayList<Integer> shuffle = new ArrayList<Integer>();
+    public Random rand;
 
-    private void animateZombie(Image moving, Image dying, int x, int y){
+    public HouseAndLawnController()
+    {
+        shuffle.add(225);
+        shuffle.add(325);
+        shuffle.add(435);
+        shuffle.add(535);
+        shuffle.add(650);
+        rand = new Random();
+    }
+
+    private void animateZombie(Image moving, Image dying, int x){
         ImageView zombie = new ImageView(moving);
         zombie.setX(x);
-        zombie.setY(y);
+        //zombie.setY(y);
+        int p = rand.nextInt(5);
+        zombie.setY(shuffle.get(p));
+
         animationLayer.getChildren().addAll(zombie);
 
         PathTransition moveZombie = new PathTransition();
-        Line zPath = new Line(zombie.getX(), zombie.getY()+zombie.getFitHeight()/2, zombie.getX()-500, zombie.getY()+zombie.getFitHeight()/2);
+        Line zPath = new Line(zombie.getX(), zombie.getY()+zombie.getFitHeight()/2, zombie.getX()-1000, zombie.getY()+zombie.getFitHeight()/2);
         moveZombie.setNode(zombie);
         moveZombie.setPath(zPath);
-        moveZombie.setDuration(Duration.seconds(5));
+        moveZombie.setDuration(Duration.seconds(20));
         moveZombie.setOnFinished((e)-> {
             Image i = new Image("./images/zombie_normal_dying.gif");
             zombie.setImage(dying);
@@ -130,11 +155,13 @@ public class HouseAndLawnController implements Initializable {
         open.setByX(80);
         open.setByY(75);
 
-        zombieAnimation = new Timeline(new KeyFrame(Duration.seconds(6), (e)-> {
-            animateZombie(new Image("./images/zombie_normal.gif"), new Image("./images/zombie_normal_dying.gif"), 1100, 325);
-            animateZombie(new Image("./images/zombie_football.gif"), new Image("./images/zombie_football_dying.gif"), 1100, 535);
 
+        zombieAnimation = new Timeline(new KeyFrame(Duration.seconds(10), (e)-> {
+            //int p = (rand.nextInt(2)+1);
+
+                animateZombie(new Image("./images/zombie_normal.gif"), new Image("./images/zombie_normal_dying.gif"), 1100);
         }));
+
         zombieAnimation.setCycleCount(10);
 
         countDown.setText(timeSeconds.toString());
