@@ -76,21 +76,12 @@ public class HouseAndLawnController implements Initializable {
     private void animateZombie(Image moving, Image dying, int x){
         ImageView zombie = new ImageView(moving);
         zombie.setX(x);
-        //zombie.setY(y);
         int p = rand.nextInt(5);
         zombie.setY(shuffle.get(p));
+        Zombie z = new Zombie(zombie, zombie.getX(), zombie.getY(), p+1, animationLayer);
 
         animationLayer.getChildren().addAll(zombie);
-
-        PathTransition moveZombie = new PathTransition();
-        Line zPath = new Line(zombie.getX(), zombie.getY()+zombie.getFitHeight()/2, zombie.getX()-1000, zombie.getY()+zombie.getFitHeight()/2);
-        moveZombie.setNode(zombie);
-        moveZombie.setPath(zPath);
-        moveZombie.setDuration(Duration.seconds(20));
-        moveZombie.setOnFinished((e)-> {
-            Image i = new Image("./images/zombie_normal_dying.gif");
-            zombie.setImage(dying);
-        });
+        lawn.addZombie(z);
 
         PauseTransition pause = new PauseTransition();
         pause.setDuration(Duration.millis(300));
@@ -98,8 +89,21 @@ public class HouseAndLawnController implements Initializable {
             animationLayer.getChildren().removeAll(zombie);
         });
 
-        SequentialTransition s = new SequentialTransition(moveZombie,pause);
-        s.play();
+        PathTransition moveZombie = new PathTransition();
+        Line zPath = new Line(zombie.getX(), zombie.getY()+zombie.getFitHeight()/2, zombie.getX()-1000, zombie.getY()+zombie.getFitHeight()/2);
+        moveZombie.setNode(zombie);
+        moveZombie.setPath(zPath);
+        moveZombie.setDuration(Duration.seconds(25));
+        moveZombie.setOnFinished((e)-> {
+            Image i = new Image("./images/zombie_normal_dying.gif");
+            zombie.setImage(dying);
+            lawn.removeZombie(z);
+            pause.play();
+        });
+
+//        SequentialTransition s = new SequentialTransition(moveZombie,pause);
+        moveZombie.play();
+        z.setMovement(moveZombie);
     }
 
     private void animateSunToken(){
@@ -245,14 +249,6 @@ public class HouseAndLawnController implements Initializable {
             cbContent.putString(source.getImage().getUrl());
             db.setContent(cbContent);
         }
-//        else if()) {
-//            Dragboard db = source.startDragAndDrop(TransferMode.ANY);
-//
-//            ClipboardContent cbContent = new ClipboardContent();
-//            cbContent.putImage(source.getImage());
-//            cbContent.putString(source.getImage().getUrl());
-//            db.setContent(cbContent);
-//        }
         mouseEvent.consume();
     }
 
@@ -267,7 +263,11 @@ public class HouseAndLawnController implements Initializable {
     private void manageDragDrop(DragEvent dragEvent) {
         ImageView target = (ImageView) dragEvent.getTarget();
         if(dragEvent.getDragboard().getString().contains("shovel")){
+            // Shovel Action
+
             if(gardenGRID.getChildren().contains(target)){
+                // If dragged on a plant
+
                 target.setImage(null);
                 Plant p = lawn.getPlant(GridPane.getColumnIndex(target), GridPane.getRowIndex(target));
                 lawn.removePlant(p);
@@ -279,16 +279,37 @@ public class HouseAndLawnController implements Initializable {
                 p.killPlant();
             }
         } else {
+            // Plant a new plant
+
             String location = dragEvent.getDragboard().getString();
             if(location.contains("peashooter") || location.contains("beetroot")){
                 shooterPlant p;
                 if(location.contains("peashooter"))
-                    p = new PeaShooter(GridPane.getColumnIndex(target), GridPane.getRowIndex(target));
+                    p = new PeaShooter(GridPane.getColumnIndex(target), GridPane.getRowIndex(target), lawn.getZombies(GridPane.getRowIndex(target)), target);
                 else
-                    p = new BeetRoot(GridPane.getColumnIndex(target), GridPane.getRowIndex(target));
+                    p = new BeetRoot(GridPane.getColumnIndex(target), GridPane.getRowIndex(target), lawn.getZombies(GridPane.getRowIndex(target)));
 
                 target.setImage(p.getAliveGIF());
-                addToAnimationGroup(p.shootBullets(target));
+                PathTransition movingBullet = p.shootBullets(target);
+                ImageView Bullet = p.getBullet();
+
+                // Shoot only when zombie present
+                movingBullet.setOnFinished(e->{
+                    removeFromAnimationGroup(movingBullet);
+                    if(((Plant) p).isZombieAttacking()){
+                        ((Plant) p).detectCollisions(true);
+                        movingBullet.setNode(Bullet);
+                        Bullet.setDisable(false);
+                        Bullet.setVisible(true);
+                    } else {
+                        ((Plant) p).detectCollisions(false);
+                        movingBullet.setNode(new ImageView());
+                        Bullet.setDisable(true);
+                    }
+                    movingBullet.play();
+                    addToAnimationGroup(movingBullet);
+                });
+                addToAnimationGroup(movingBullet);
                 lawn.addPlant((Plant) p);
 //                ImageView x = p.getBullet();
 //                new AnimationTimer() {
@@ -300,15 +321,26 @@ public class HouseAndLawnController implements Initializable {
 
             } else {
                 if(location.contains("walnut")){
-                    Walnut w = new Walnut(GridPane.getColumnIndex(target), GridPane.getRowIndex(target));
+                    Walnut w = new Walnut(GridPane.getColumnIndex(target), GridPane.getRowIndex(target), lawn.getZombies(GridPane.getRowIndex(target)));
                     target.setImage(w.getFullHealthGIF());
                     lawn.addPlant(w);
+
                 } else if(location.contains("sunflower")){
-                    SunFlower s = new SunFlower(GridPane.getColumnIndex(target), GridPane.getRowIndex(target), sunTokenCount, target);
+                    SunFlower s = new SunFlower(GridPane.getColumnIndex(target), GridPane.getRowIndex(target), sunTokenCount, target, lawn.getZombies(GridPane.getRowIndex(target)));
                     target.setImage(s.getAliveGIF());
+
+                    // Generate sun tokens
                     SequentialTransition tokengen = s.generateTokens(sunTokenCount);
+                    tokengen.setOnFinished(e->{
+                        removeFromAnimationGroup(tokengen);
+                        tokengen.setDelay(Duration.seconds(ThreadLocalRandom.current().nextInt(5,8)));
+                        if(s.getToken().getImage() == null)
+                            s.getToken().setImage((new SunToken(sunTokenCount)).getSunImage());
+                        tokengen.play();
+                        addToAnimationGroup(tokengen);
+                    });
                     tokengen.play();
-//                    addToAnimationGroup(tokengen);
+                    addToAnimationGroup(tokengen);
                     lawn.addPlant(s);
                 }
             }

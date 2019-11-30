@@ -9,6 +9,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Line;
 import javafx.util.Duration;
 
+import java.util.ArrayList;
+
 public class BeetRoot extends Plant implements shooterPlant{
     private Image aliveGIF;
     private Image dyingGIF;
@@ -17,8 +19,8 @@ public class BeetRoot extends Plant implements shooterPlant{
     private ImageView bulletIV;
     private AnchorPane pane;
 
-    public BeetRoot(int x, int y){
-        super(100, x, y);
+    public BeetRoot(int x, int y, ArrayList zombies){
+        super(100, x, y, zombies);
         aliveGIF = new Image("images/beetroot.gif");
         dyingGIF = new Image("images/beetroot_dying.gif");
         beetBullet = new Image("images/beetbullet.png");
@@ -71,6 +73,11 @@ public class BeetRoot extends Plant implements shooterPlant{
     public void killPlant() {
         movingBullet.stop();
         pane.getChildren().remove(bulletIV);
+    }
+
+    @Override
+    public void detectCollisions(boolean activate) {
+
     }
 
     public PathTransition getAnimation() {

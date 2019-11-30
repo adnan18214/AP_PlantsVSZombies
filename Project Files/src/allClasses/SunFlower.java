@@ -1,6 +1,5 @@
 package allClasses;
 
-import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.SequentialTransition;
@@ -10,23 +9,23 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.ArrayList;
 
 public class SunFlower extends Plant{
     private Image aliveGIF;
     private Image dyingGIF;
     private Text sunTokenCount;
-    private ImageView targetIV;
+    private ImageView plantIV;
     private ImageView token;
     private AnchorPane pane;
     private SequentialTransition showingToken;
 
-    public SunFlower(int x, int y, Text sCount, ImageView targetIV) {
-        super(100, x, y);
+    public SunFlower(int x, int y, Text sCount, ImageView targetIV, ArrayList zombies) {
+        super(100, x, y, zombies);
         aliveGIF = new Image("images/sunflower.gif");
         dyingGIF = new Image("images/sunflower_dying.gif");
         sunTokenCount = sCount;
-        this.targetIV = targetIV;
+        plantIV = targetIV;
     }
 
     public Image getAliveGIF() {
@@ -39,9 +38,9 @@ public class SunFlower extends Plant{
 
     public SequentialTransition generateTokens(Text sunCounter){
         SunToken sun = new SunToken(sunTokenCount);
-        token  = sun.getSuntoken(targetIV.getParent().getLayoutX() + targetIV.getBoundsInParent().getCenterX(), targetIV.getParent().getLayoutY() + targetIV.getBoundsInParent().getCenterY());
+        token  = sun.getSuntoken(plantIV.getParent().getLayoutX() + plantIV.getBoundsInParent().getCenterX(), plantIV.getParent().getLayoutY() + plantIV.getBoundsInParent().getCenterY());
         token.setOpacity(0);
-        pane = (AnchorPane) targetIV.getParent().getParent();
+        pane = (AnchorPane) plantIV.getParent().getParent();
 
         FadeTransition appear = new FadeTransition(Duration.seconds(0.5), token);
         appear.setFromValue(0.0);
@@ -56,12 +55,7 @@ public class SunFlower extends Plant{
         showingToken = new SequentialTransition(appear,pause,disappear);
         showingToken.setCycleCount(1);
         showingToken.setDelay(Duration.seconds(3));
-        showingToken.setOnFinished(e -> {
-            showingToken.setDelay(Duration.seconds(ThreadLocalRandom.current().nextInt(5,8)));
-            if(token.getImage() == null)
-                token.setImage(sun.getSunImage());
-            showingToken.play();
-        });
+
         pane.getChildren().add(token);
         return showingToken;
     }
@@ -74,5 +68,14 @@ public class SunFlower extends Plant{
     public void killPlant() {
         showingToken.stop();
         pane.getChildren().remove(token);
+    }
+
+    @Override
+    public void detectCollisions(boolean activate) {
+
+    }
+
+    public ImageView getToken() {
+        return token;
     }
 }

@@ -1,15 +1,19 @@
 package allClasses;
 
+import java.util.ArrayList;
+
 public abstract class Plant {
     protected final int X_COORDINATE;
     protected final int Y_COORDINATE;
+    protected final ArrayList<Zombie> attackingZombies;
     private int health;
     private boolean alive;
 
-    public Plant(int h, int x, int y){
+    public Plant(int h, int x, int y, ArrayList zombies){
         health = h;
         X_COORDINATE = x;
         Y_COORDINATE = y;
+        attackingZombies = zombies;
         alive = true;
     }
 
@@ -33,5 +37,10 @@ public abstract class Plant {
         return Y_COORDINATE;
     }
 
+    public boolean isZombieAttacking(){
+        return !attackingZombies.isEmpty();
+    }
+
     public abstract void killPlant();
+    public abstract void detectCollisions(boolean activate);
 }
