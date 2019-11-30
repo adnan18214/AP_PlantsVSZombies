@@ -42,7 +42,7 @@ public class Lawn {
     }
 
     public Plant getPlant(int x, int y){
-        return grid[x-1][y-1];
+        return grid[y-1][x-1];
     }
 
     public void removePlant(Plant p){
