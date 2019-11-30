@@ -73,8 +73,8 @@ public class HouseAndLawnController implements Initializable {
 
     public HouseAndLawnController()
     {
-        this.market.add(new PeaShooter(0,0));
-        this.market.add(new SunFlower(0,0, sunTokenCount,sunFlower));
+        this.market.add(new PeaShooter(0,0, new ArrayList(), new ImageView()));
+        this.market.add(new SunFlower(0,0, sunTokenCount,sunFlower, new ArrayList()));
         shuffle.add(225);
         shuffle.add(325);
         shuffle.add(435);
@@ -86,7 +86,6 @@ public class HouseAndLawnController implements Initializable {
     private void animateZombie(Image moving, Image dying, int x){
 
         ImageView zombie = new ImageView(moving);
-        Zombie zoomba = new Zombie(zombie);
         zombie.setX(x);
         int p = rand.nextInt(5);
         zombie.setY(shuffle.get(p));
@@ -95,8 +94,6 @@ public class HouseAndLawnController implements Initializable {
         int p1 = (shuffle.get(p)%100);
         p1 = shuffle.get(p) - p1;
         int index = (p1/100)-2;
-
-        //lawn.addZombie(zoomba,index);
 
         System.out.println(index);
 

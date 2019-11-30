@@ -79,7 +79,6 @@ public class HouseAndLawn3Controller implements Initializable {
     private void animateZombie(Image moving, Image dying, int x){
 
         ImageView zombie = new ImageView(moving);
-        Zombie zoomba = new Zombie(zombie);
         zombie.setX(x);
 
         int p = rand.nextInt(5);
@@ -308,9 +307,9 @@ public class HouseAndLawn3Controller implements Initializable {
             if(location.contains("peashooter") || location.contains("beetroot")){
                 shooterPlant p;
                 if(location.contains("peashooter"))
-                    p = new PeaShooter(GridPane.getColumnIndex(target), GridPane.getRowIndex(target));
+                    p = new PeaShooter(GridPane.getColumnIndex(target), GridPane.getRowIndex(target), lawn.getZombies(GridPane.getRowIndex(target)), target);
                 else
-                    p = new BeetRoot(GridPane.getColumnIndex(target), GridPane.getRowIndex(target));
+                    p = new BeetRoot(GridPane.getColumnIndex(target), GridPane.getRowIndex(target), lawn.getZombies(GridPane.getRowIndex(target)));
 
                 target.setImage(p.getAliveGIF());
                 addToAnimationGroup(p.shootBullets(target));
@@ -325,11 +324,11 @@ public class HouseAndLawn3Controller implements Initializable {
 
             } else {
                 if(location.contains("walnut")){
-                    Walnut w = new Walnut(GridPane.getColumnIndex(target), GridPane.getRowIndex(target));
+                    Walnut w = new Walnut(GridPane.getColumnIndex(target), GridPane.getRowIndex(target), lawn.getZombies(GridPane.getRowIndex(target)));
                     target.setImage(w.getFullHealthGIF());
                     lawn.addPlant(w);
                 } else if(location.contains("sunflower")){
-                    SunFlower s = new SunFlower(GridPane.getColumnIndex(target), GridPane.getRowIndex(target), sunTokenCount, target);
+                    SunFlower s = new SunFlower(GridPane.getColumnIndex(target), GridPane.getRowIndex(target), sunTokenCount, target, lawn.getZombies(GridPane.getRowIndex(target)));
                     target.setImage(s.getAliveGIF());
                     SequentialTransition tokengen = s.generateTokens(sunTokenCount);
                     tokengen.play();
