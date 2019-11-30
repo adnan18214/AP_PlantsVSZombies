@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -27,7 +28,7 @@ import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class HouseAndLawnController implements Initializable {
+public class HouseAndLawn2Controller implements Initializable {
     @FXML
     private ImageView shade;
     @FXML
@@ -44,13 +45,9 @@ public class HouseAndLawnController implements Initializable {
     private ImageView lawnMower1;
     @FXML
     private Text countDown;
-    @FXML
-    private ImageView peaShooter;
-    @FXML
-    private ImageView sunFlower;
 
 
-    private static final Integer WAVETIME = 20;
+    private static final Integer WAVETIME = 10;
     private Integer timeSeconds = WAVETIME;
     private Timeline zombieAnimation;
     private Timeline counter;
@@ -59,9 +56,6 @@ public class HouseAndLawnController implements Initializable {
     private boolean dragSuccessful;
     private boolean shovelActivated;
     private Lawn lawn;
-    private ArrayList<Plant> market = new ArrayList<Plant>();
-    private SunToken s;
-
     @FXML
     private Text sunTokenCount;
     @FXML
@@ -71,10 +65,9 @@ public class HouseAndLawnController implements Initializable {
     public ArrayList<Integer> shuffle = new ArrayList<Integer>();
     public Random rand;
 
-    public HouseAndLawnController()
+
+    public HouseAndLawn2Controller()
     {
-        this.market.add(new PeaShooter(0,0));
-        this.market.add(new SunFlower(0,0, sunTokenCount,sunFlower));
         shuffle.add(225);
         shuffle.add(325);
         shuffle.add(435);
@@ -128,7 +121,7 @@ public class HouseAndLawnController implements Initializable {
         moveSun = new PathTransition();
         double x = ThreadLocalRandom.current().nextDouble(200,850);
         double y = 105;
-        s = new SunToken(sunTokenCount);
+        SunToken s = new SunToken(sunTokenCount);
         ImageView sunToken = s.getSuntoken(x,y);
 
         Line sPath = new Line(x+32, y+29, x+32, y+800);
@@ -146,7 +139,6 @@ public class HouseAndLawnController implements Initializable {
         appearToken.play();
 
         moveSun.setOnFinished(e -> {
-            update();
             double newX = ThreadLocalRandom.current().nextDouble(200,850);
             moveSun.setPath(new Line(newX, y+10, newX, y+800));
             moveSun.setDelay(Duration.seconds(ThreadLocalRandom.current().nextInt(5,10)));
@@ -181,8 +173,15 @@ public class HouseAndLawnController implements Initializable {
 
         zombieAnimation = new Timeline(new KeyFrame(Duration.seconds(10), (e)-> {
             //int p = (rand.nextInt(2)+1);
+            int sel = rand.nextInt((2));
 
+            if (sel == 0) {
                 animateZombie(new Image("./images/zombie_normal.gif"), new Image("./images/zombie_normal_dying.gif"), 1100);
+            }
+            else {
+                animateZombie(new Image("./images/zombie_football.gif"), new Image("./images/zombie_football_dying.gif"), 1100);
+            }
+
         }));
 
         zombieAnimation.setCycleCount(10);
@@ -211,24 +210,6 @@ public class HouseAndLawnController implements Initializable {
         });
 
 
-
-    }
-
-    public void update()
-    {
-        /*if ((Integer.parseInt(sunTokenCount.getText()))<50)
-        {
-            Image i = new Image("./images/active_sunflower.png");
-            sunFlower.setImage(i);
-        }*/
-
-            System.out.println(market.get(1).getHealth());
-        System.out.println(Integer.parseInt(sunTokenCount.getText()));
-            if ((Integer.parseInt(sunTokenCount.getText())) >= market.get(1).getHealth())
-            {
-                Image temp = new Image(market.get(1).getActiveUrl());
-                sunFlower.setImage(temp);
-            }
 
     }
 

@@ -22,7 +22,7 @@ public class SunFlower extends Plant{
     private SequentialTransition showingToken;
 
     public SunFlower(int x, int y, Text sCount, ImageView targetIV) {
-        super(100, x, y);
+        super(50, x, y,"images/active_sunflower.png","images/inactive_sunflower.png");
         aliveGIF = new Image("images/sunflower.gif");
         dyingGIF = new Image("images/sunflower_dying.gif");
         sunTokenCount = sCount;

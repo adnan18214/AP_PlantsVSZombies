@@ -1,5 +1,7 @@
 package allClasses;
 
+import javafx.scene.image.ImageView;
+
 import java.util.ArrayList;
 
 public class Zombie
@@ -7,15 +9,12 @@ public class Zombie
     private int posX;
     private int posY;
     private int health;
-    private ArrayList<Integer> shuffle = new ArrayList<Integer>();
+    private ImageView zombieImage;
 
-    public Zombie()
+    public Zombie(ImageView i)
     {
+        this.zombieImage = i;
         this.posX = 1100;
         this.health = 30;
-        //this.posY = random.randint;
-        shuffle.add(325);
-        shuffle.add(540);
-        shuffle.add(425);
     }
 }

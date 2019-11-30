@@ -8,7 +8,7 @@ public class Walnut extends Plant{
     private Image dyingGIF;
 
     public Walnut(int x, int y) {
-        super(100, x, y);
+        super(100, x, y, "images/active_walnut.png","images/inactive_walnut.png");
         fullHealthGIF = new Image("images/walnut.gif");
         halfHealthGIF = new Image("images/walnut_half_life.gif");
         dyingGIF = new Image("images/walnut_dead.gif");

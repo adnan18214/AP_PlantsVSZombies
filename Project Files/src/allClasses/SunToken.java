@@ -8,6 +8,7 @@ public class SunToken {
     private Image sun;
     private Text sunTokenCount;
 
+
     public SunToken(Text sCount){
         sunTokenCount = sCount;
         sun = new Image("images/sunToken.gif");
@@ -34,4 +35,6 @@ public class SunToken {
     public Image getSunImage() {
         return sun;
     }
+
+
 }

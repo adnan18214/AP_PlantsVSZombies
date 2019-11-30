@@ -18,7 +18,7 @@ public class PeaShooter extends Plant implements shooterPlant{
     private PathTransition movingBullet;
 
     public PeaShooter(int x, int y){
-        super(100, x, y);
+        super(100, x, y,"images/active_peashooter.png","images/inactive_peashooter.png");
         aliveGIF = new Image("images/peashooter.gif");
         dyingGIF = new Image("images/peashooter_dying.gif");
         peaBullet = new Image("images/Pea.png");
@@ -31,6 +31,8 @@ public class PeaShooter extends Plant implements shooterPlant{
     public Image getDyingGIF() {
         return dyingGIF;
     }
+
+
 
     /**
      * Creates animated bullets.

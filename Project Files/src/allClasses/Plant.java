@@ -1,12 +1,19 @@
 package allClasses;
 
+import javax.swing.text.html.ImageView;
+
 public abstract class Plant {
     protected final int X_COORDINATE;
     protected final int Y_COORDINATE;
     private int health;
     private boolean alive;
+    private String active;
+    private String inactive;
 
-    public Plant(int h, int x, int y){
+
+    public Plant(int h, int x, int y, String ac, String in){
+        active = ac;
+        inactive = in;
         health = h;
         X_COORDINATE = x;
         Y_COORDINATE = y;
@@ -21,6 +28,18 @@ public abstract class Plant {
         }
     }
 
+    public String getInactiveUrl()
+    {
+        return inactive;
+    }
+
+    public String getActiveUrl()
+    {
+        return active;
+    }
+
+    public int getHealth(){return health;}
+
     public boolean isAlive(){
         return alive;
     }
@@ -34,4 +53,6 @@ public abstract class Plant {
     }
 
     public abstract void killPlant();
+
+
 }

@@ -116,12 +116,12 @@
             <ImageView fitHeight="78.0" fitWidth="85.0" onDragDropped="#manageDragDrop" onDragOver="#manageDragOver" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
          </children>
       </GridPane>
-      <ImageView fitHeight="99.0" fitWidth="95.0" layoutX="929.0" layoutY="1.0" onDragDetected="#manageDragDetected" onDragDone="#manageDragDone" onMouseDragged="#makeDark" onMouseEntered="#makeGlow" onMouseExited="#removeEffect" onMousePressed="#makeDark" onMouseReleased="#removeEffect" pickOnBounds="true" preserveRatio="true" scaleY="1.02">
+      <ImageView fx:id="sunFlower" fitHeight="99.0" fitWidth="95.0" layoutX="929.0" layoutY="1.0" onDragDetected="#manageDragDetected" onDragDone="#manageDragDone" onMouseDragged="#makeDark" onMouseEntered="#makeGlow" onMouseExited="#removeEffect" onMousePressed="#makeDark" onMouseReleased="#removeEffect" pickOnBounds="true" preserveRatio="true" scaleY="1.02">
          <image>
-            <Image url="@../images/active_sunflower.png" />
+            <Image url="@../images/inactive_sunflower.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="98.0" fitWidth="95.0" layoutX="834.0" layoutY="1.0" onDragDetected="#manageDragDetected" onDragDone="#manageDragDone" onMouseDragged="#makeDark" onMouseEntered="#makeGlow" onMouseExited="#removeEffect" onMousePressed="#makeDark" onMouseReleased="#removeEffect" pickOnBounds="true" preserveRatio="true" scaleY="1.02">
+      <ImageView fx:id="peaShooter" fitHeight="98.0" fitWidth="95.0" layoutX="834.0" layoutY="1.0" onDragDetected="#manageDragDetected" onDragDone="#manageDragDone" onMouseDragged="#makeDark" onMouseEntered="#makeGlow" onMouseExited="#removeEffect" onMousePressed="#makeDark" onMouseReleased="#removeEffect" pickOnBounds="true" preserveRatio="true" scaleY="1.02">
          <image>
             <Image url="@../images/active_peashooter.png" />
          </image>
