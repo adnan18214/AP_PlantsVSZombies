@@ -94,7 +94,7 @@ public class PeaShooter extends Plant implements shooterPlant{
         Line pPath = new Line(PEA.getX(), PEA.getY()+5, PEA.getX()+1000, PEA.getY()+5);
         movePea.setNode(PEA);
         movePea.setPath(pPath);
-        movePea.setDuration(Duration.seconds(2));
+        movePea.setDuration(Duration.seconds(1));
         movePea.setCycleCount(1);
         movingBullet = movePea;
     }

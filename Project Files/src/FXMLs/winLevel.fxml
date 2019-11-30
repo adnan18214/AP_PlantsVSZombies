@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.GaussianBlur?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXMLs.WinLevelController">
+   <children>
+      <ImageView fitHeight="768.0" fitWidth="1024.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/bgLogin.jpg" />
+         </image>
+         <effect>
+            <GaussianBlur />
+         </effect>
+      </ImageView>
+      <ImageView fitHeight="417.0" fitWidth="798.0" layoutX="115.0" layoutY="189.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/LevelCleared.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="shade" fitHeight="776.0" fitWidth="1047.0" layoutX="-5.0" layoutY="-3.0" pickOnBounds="true" preserveRatio="true" scaleX="1.01">
+         <image>
+            <Image url="@../images/transition.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

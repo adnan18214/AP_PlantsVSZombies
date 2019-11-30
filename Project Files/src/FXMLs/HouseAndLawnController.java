@@ -50,7 +50,7 @@ public class HouseAndLawnController implements Initializable {
     private ImageView sunFlower;
 
 
-    private static final Integer WAVETIME = 20;
+    private static final Integer WAVETIME = 10;
     private Integer timeSeconds = WAVETIME;
     private Timeline zombieAnimation;
     private Timeline counter;
@@ -179,7 +179,7 @@ public class HouseAndLawnController implements Initializable {
         open.setByY(75);
 
 
-        zombieAnimation = new Timeline(new KeyFrame(Duration.seconds(10), (e)-> {
+        zombieAnimation = new Timeline(new KeyFrame(Duration.seconds(12), (e)-> {
             //int p = (rand.nextInt(2)+1);
 
                 animateZombie(new Image("./images/zombie_normal.gif"), new Image("./images/zombie_normal_dying.gif"), 1100);
@@ -222,14 +222,24 @@ public class HouseAndLawnController implements Initializable {
             sunFlower.setImage(i);
         }*/
 
-            System.out.println(market.get(1).getHealth());
-        System.out.println(Integer.parseInt(sunTokenCount.getText()));
-            if ((Integer.parseInt(sunTokenCount.getText())) >= market.get(1).getHealth())
-            {
-                Image temp = new Image(market.get(1).getActiveUrl());
-                sunFlower.setImage(temp);
-            }
+            //System.out.println(market.get(1).getHealth());
+        //System.out.println(Integer.parseInt(sunTokenCount.getText()));
 
+        for (int i=0; i<market.size(); i++)
+        {
+            if ((Integer.parseInt(sunTokenCount.getText())) >= market.get(i).getHealth())
+            {
+                Image temp = new Image(market.get(i).getActiveUrl());
+                if (market.get(i).getActiveUrl().contains("sunflower"))
+                {
+                    sunFlower.setImage(temp);
+                }
+                else if (market.get(i).getActiveUrl().contains("peashooter"))
+                {
+                    peaShooter.setImage(temp);
+                }
+            }
+        }
     }
 
 
@@ -394,6 +404,19 @@ public class HouseAndLawnController implements Initializable {
             String url = ((ImageView) dragEvent.getSource()).getImage().getUrl();
             url = url.replace("active", "inactive");
             ((ImageView) dragEvent.getSource()).setImage(new Image(url));
+            int suns = Integer.parseInt(sunTokenCount.getText());
+            if (url.contains("peashooter"))
+            {
+                suns-=100;
+
+                sunTokenCount.setText(Integer.toString(suns));
+            }
+            else if (url.contains("sunflower"))
+            {
+                suns-=50;
+
+                sunTokenCount.setText(Integer.toString(suns));
+            }
             dragSuccessful = false;
         }
     }
