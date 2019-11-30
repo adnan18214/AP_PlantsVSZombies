@@ -70,6 +70,8 @@ public class HouseAndLawn2Controller extends HouseAndLawnParent implements Initi
     private GridPane gardenGRID;
     public ArrayList<Integer> shuffle = new ArrayList<Integer>();
     public Random rand;
+    @FXML
+    private ImageView house;
 
 
     public HouseAndLawn2Controller()
@@ -117,7 +119,6 @@ public class HouseAndLawn2Controller extends HouseAndLawnParent implements Initi
             pause.play();
         });
 
-//        SequentialTransition s = new SequentialTransition(moveZombie,pause);
         moveZombie.play();
         z.setMovement(moveZombie);
     }
@@ -190,6 +191,16 @@ public class HouseAndLawn2Controller extends HouseAndLawnParent implements Initi
                 countDown.setText("NEXT WAVE");
                 if(timeSeconds < -3)
                     timeSeconds = WAVETIME;
+            }
+            for(int i = 1; i <= 5; i++){
+                ArrayList<Zombie> zombies = lawn.getZombies(i);
+                if(!zombies.isEmpty()){
+                    if(house.getBoundsInParent().intersects(zombies.get(0).getZombieIV().getBoundsInParent())){
+                        stopAnimations();
+                        youLostGame();
+                        break;
+                    }
+                }
             }
         }));
         counter.setCycleCount(Timeline.INDEFINITE);
@@ -276,6 +287,25 @@ public class HouseAndLawn2Controller extends HouseAndLawnParent implements Initi
         moveSun.stop();
         counter.stop();
         allTempTransitions.stop();
+    }
+
+    private void youLostGame(){
+        ScaleTransition close  = new ScaleTransition(Duration.seconds(1), shade);
+        close.setByX(-78);
+        close.setByY(-73);
+        shade.toFront();
+        shade.setVisible(true);
+        close.play();
+
+        close.setOnFinished((e)-> {
+            try {
+                Parent next = FXMLLoader.load(getClass().getClassLoader().getResource("./FXMLs/gameOver.fxml"));
+                Stage primaryStage = (Stage) shade.getScene().getWindow();
+                primaryStage.setScene(new Scene(next));
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
     }
 
     @FXML
@@ -390,14 +420,25 @@ public class HouseAndLawn2Controller extends HouseAndLawnParent implements Initi
             String url = ((ImageView) dragEvent.getSource()).getImage().getUrl();
             url = url.replace("active", "inactive");
             ((ImageView) dragEvent.getSource()).setImage(new Image(url));
+            int suns = Integer.parseInt(sunTokenCount.getText());
+            if (url.contains("peashooter"))
+            {
+                suns-=100;
+                sunTokenCount.setText(Integer.toString(suns));
+            }
+            else if (url.contains("sunflower"))
+            {
+                suns-=50;
+                sunTokenCount.setText(Integer.toString(suns));
+            }
+            else if (url.contains("walnut"))
+            {
+                suns-=25;
+                sunTokenCount.setText(Integer.toString(suns));
+            }
             dragSuccessful = false;
         }
     }
-
-//    @FXML
-//    private void testLawnMower(MouseEvent mouseEvent) {
-//        animateLawnMower((ImageView) mouseEvent.getSource());
-//    }
 
     @FXML
     private void activateShovelAction(MouseEvent mouseEvent) {
