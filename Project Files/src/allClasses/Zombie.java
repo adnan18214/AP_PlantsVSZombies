@@ -20,12 +20,12 @@ public class Zombie
     private PathTransition movement;
     private AnchorPane animationLayer;
 
-    public Zombie(ImageView z, double x, double y, int r, AnchorPane animationLayer)
+    public Zombie(ImageView z, double x, double y, int r, AnchorPane animationLayer, int health)
     {
         this.posX = x;
         this.row = r;
         this.posY = y;
-        this.health = 25;
+        this.health = health;
         zombieIV = z;
         alive = true;
         this.animationLayer = animationLayer;

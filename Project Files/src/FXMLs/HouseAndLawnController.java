@@ -20,7 +20,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -88,14 +87,14 @@ public class HouseAndLawnController extends HouseAndLawnParent implements Initia
         rand = new Random();
     }
 
-    private void animateZombie(Image moving, Image dying, int x){
+    private void animateZombie(DrawableZombie zImage, int x){
 
-        ImageView zombie = new ImageView(moving);
+        ImageView zombie = new ImageView(zImage.getAliveGIF());
         zombie.setX(x);
 
         int p = rand.nextInt(5);
         zombie.setY(shuffle.get(p));
-        Zombie z = new Zombie(zombie, zombie.getX(), zombie.getY(), p+1, animationLayer);
+        Zombie z = new Zombie(zombie, zombie.getX(), zombie.getY(), p+1, animationLayer, zImage.getHealth());
 
         animationLayer.getChildren().addAll(zombie);
         lawn.addZombie(z);
@@ -113,7 +112,7 @@ public class HouseAndLawnController extends HouseAndLawnParent implements Initia
         moveZombie.setDuration(Duration.seconds(25));
         moveZombie.setOnFinished((e)-> {
             Image i = new Image("./images/zombie_normal_dying.gif");
-            zombie.setImage(dying);
+            zombie.setImage(zImage.getDyingGIF());
             lawn.removeZombie(z);
             pause.play();
         });
@@ -175,9 +174,9 @@ public class HouseAndLawnController extends HouseAndLawnParent implements Initia
         lawn.addLawnMower(lawnMower4, 4);
         lawn.addLawnMower(lawnMower5, 5);
 
-        zombieAnimation = new Timeline(new KeyFrame(Duration.seconds(2), (e)-> {
+        zombieAnimation = new Timeline(new KeyFrame(Duration.seconds(10), (e)-> {
             flag1.set(true);
-            animateZombie(new Image("./images/zombie_normal.gif"), new Image("./images/zombie_normal_dying.gif"), 1100);
+            animateZombie(new LocalZombie(), 1100);
         }));
         zombieAnimation.setCycleCount(10);
 

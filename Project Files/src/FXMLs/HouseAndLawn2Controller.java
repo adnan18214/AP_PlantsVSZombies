@@ -26,6 +26,7 @@ import java.util.Objects;
 import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class HouseAndLawn2Controller extends HouseAndLawnParent implements Initializable {
     @FXML
@@ -89,14 +90,14 @@ public class HouseAndLawn2Controller extends HouseAndLawnParent implements Initi
         rand = new Random();
     }
 
-    private void animateZombie(Image moving, Image dying, int x){
+    private void animateZombie(DrawableZombie zImage, int x){
 
-        ImageView zombie = new ImageView(moving);
+        ImageView zombie = new ImageView(zImage.getAliveGIF());
         zombie.setX(x);
 
         int p = rand.nextInt(5);
         zombie.setY(shuffle.get(p));
-        Zombie z = new Zombie(zombie, zombie.getX(), zombie.getY(), p+1, animationLayer);
+        Zombie z = new Zombie(zombie, zombie.getX(), zombie.getY(), p+1, animationLayer, zImage.getHealth());
 
         animationLayer.getChildren().addAll(zombie);
         lawn.addZombie(z);
@@ -114,7 +115,7 @@ public class HouseAndLawn2Controller extends HouseAndLawnParent implements Initi
         moveZombie.setDuration(Duration.seconds(25));
         moveZombie.setOnFinished((e)-> {
             Image i = new Image("./images/zombie_normal_dying.gif");
-            zombie.setImage(dying);
+            zombie.setImage(zImage.getDyingGIF());
             lawn.removeZombie(z);
             pause.play();
         });
@@ -159,6 +160,10 @@ public class HouseAndLawn2Controller extends HouseAndLawnParent implements Initi
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        AtomicReference<Boolean> flag1 = new AtomicReference<>(false);
+        AtomicReference<Boolean> flag2 = new AtomicReference<>(true);
+
         shovelActivated = false;
         lawn = Lawn.getLawn();
 
@@ -172,13 +177,14 @@ public class HouseAndLawn2Controller extends HouseAndLawnParent implements Initi
         lawn.addLawnMower(lawnMower4, 4);
         lawn.addLawnMower(lawnMower5, 5);
 
-        zombieAnimation = new Timeline(new KeyFrame(Duration.seconds(6), (e)-> {
+        zombieAnimation = new Timeline(new KeyFrame(Duration.seconds(10), (e)-> {
+            flag1.set(true);
             int sel = rand.nextInt((2));
             if (sel == 0) {
-                animateZombie(new Image("./images/zombie_normal.gif"), new Image("./images/zombie_normal_dying.gif"), 1100);
+                animateZombie(new LocalZombie(), 1100);
             }
             else {
-                animateZombie(new Image("./images/zombie_football.gif"), new Image("./images/zombie_football_dying.gif"), 1100);
+                animateZombie(new FootballZombie(), 1100);
             }
         }));
         zombieAnimation.setCycleCount(10);
@@ -192,15 +198,21 @@ public class HouseAndLawn2Controller extends HouseAndLawnParent implements Initi
                 if(timeSeconds < -3)
                     timeSeconds = WAVETIME;
             }
+            flag2.set(true);
             for(int i = 1; i <= 5; i++){
                 ArrayList<Zombie> zombies = lawn.getZombies(i);
                 if(!zombies.isEmpty()){
+                    flag2.set(false);
                     if(house.getBoundsInParent().intersects(zombies.get(0).getZombieIV().getBoundsInParent())){
                         stopAnimations();
                         youLostGame();
                         break;
                     }
                 }
+            }
+            if (flag1.get() && flag2.get()) {
+                stopAnimations();
+                youWin();
             }
         }));
         counter.setCycleCount(Timeline.INDEFINITE);
@@ -213,6 +225,26 @@ public class HouseAndLawn2Controller extends HouseAndLawnParent implements Initi
             zombieAnimation.play();
             counter.play();
 
+        });
+    }
+
+    public void youWin()
+    {
+        ScaleTransition close  = new ScaleTransition(Duration.seconds(1), shade);
+        close.setByX(-78);
+        close.setByY(-73);
+        shade.toFront();
+        shade.setVisible(true);
+        close.play();
+
+        close.setOnFinished((e)-> {
+            try {
+                Parent next = FXMLLoader.load(getClass().getClassLoader().getResource("./FXMLs/winLevel.fxml"));
+                Stage primaryStage = (Stage) shade.getScene().getWindow();
+                primaryStage.setScene(new Scene(next));
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         });
     }
 
