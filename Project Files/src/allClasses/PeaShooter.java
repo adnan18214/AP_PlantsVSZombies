@@ -21,7 +21,7 @@ public class PeaShooter extends Plant implements shooterPlant{
     private Timeline collider;
 
     public PeaShooter(int x, int y, ArrayList zombies, ImageView plant){
-        super(100, x, y, zombies);
+        super(100, x, y,"images/active_peashooter.png","images/inactive_peashooter.png", zombies);
         aliveGIF = new Image("images/peashooter.gif");
         dyingGIF = new Image("images/peashooter_dying.gif");
         peaBullet = new Image("images/Pea.png");
@@ -61,6 +61,8 @@ public class PeaShooter extends Plant implements shooterPlant{
     public Image getDyingGIF() {
         return dyingGIF;
     }
+
+
 
     /**
      * Creates animated bullets.

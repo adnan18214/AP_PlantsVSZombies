@@ -20,7 +20,7 @@ public class BeetRoot extends Plant implements shooterPlant{
     private AnchorPane pane;
 
     public BeetRoot(int x, int y, ArrayList zombies){
-        super(100, x, y, zombies);
+        super(100, x, y, "images/active_beetroot.png", "images/inactive_beetroot.png", zombies);
         aliveGIF = new Image("images/beetroot.gif");
         dyingGIF = new Image("images/beetroot_dying.gif");
         beetBullet = new Image("images/beetbullet.png");

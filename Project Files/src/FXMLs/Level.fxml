@@ -25,17 +25,17 @@
             <Blend />
          </effect>
       </ImageView>
-      <ImageView fitHeight="200.0" fitWidth="300.0" layoutX="369.0" layoutY="223.0" onMouseEntered="#makeGlow" onMouseExited="#removeEffect" onMousePressed="#makeDark" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="200.0" fitWidth="300.0" layoutX="369.0" layoutY="223.0" onMouseClicked="#level1" onMouseEntered="#makeGlow" onMouseExited="#removeEffect" onMousePressed="#makeDark" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/level1.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="200.0" fitWidth="300.0" layoutX="370.0" layoutY="328.0" onMouseEntered="#makeGlow" onMouseExited="#removeEffect" onMousePressed="#makeDark" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="200.0" fitWidth="300.0" layoutX="370.0" layoutY="328.0" onMouseClicked="#level2" onMouseEntered="#makeGlow" onMouseExited="#removeEffect" onMousePressed="#makeDark" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/level2.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="200.0" fitWidth="300.0" layoutX="368.0" layoutY="431.0" onMouseEntered="#makeGlow" onMouseExited="#removeEffect" onMousePressed="#makeDark" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="200.0" fitWidth="300.0" layoutX="368.0" layoutY="431.0" onMouseClicked="#level3" onMouseEntered="#makeGlow" onMouseExited="#removeEffect" onMousePressed="#makeDark" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/level3.png" />
          </image>

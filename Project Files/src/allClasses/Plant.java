@@ -2,14 +2,21 @@ package allClasses;
 
 import java.util.ArrayList;
 
+import javax.swing.text.html.ImageView;
+
 public abstract class Plant {
     protected final int X_COORDINATE;
     protected final int Y_COORDINATE;
     protected final ArrayList<Zombie> attackingZombies;
     private int health;
     private boolean alive;
+    private String active;
+    private String inactive;
 
-    public Plant(int h, int x, int y, ArrayList zombies){
+
+    public Plant(int h, int x, int y, String ac, String in, ArrayList zombies){
+        active = ac;
+        inactive = in;
         health = h;
         X_COORDINATE = x;
         Y_COORDINATE = y;
@@ -24,6 +31,18 @@ public abstract class Plant {
             alive = false;
         }
     }
+
+    public String getInactiveUrl()
+    {
+        return inactive;
+    }
+
+    public String getActiveUrl()
+    {
+        return active;
+    }
+
+    public int getHealth(){return health;}
 
     public boolean isAlive(){
         return alive;

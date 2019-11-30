@@ -75,4 +75,64 @@ public class LevelController implements Initializable{
             }
         });
     }
+
+    @FXML
+    private void level1(MouseEvent mouseEvent)
+    {
+        ScaleTransition close1  = new ScaleTransition(Duration.seconds(1), shade);
+        close1.setByX(-78);
+        close1.setByY(-73);
+        shade.setVisible(true);
+        close1.play();
+
+        close1.setOnFinished((e)-> {
+            try {
+                Parent next = FXMLLoader.load(getClass().getClassLoader().getResource("./FXMLs/houseAndLawn.fxml"));
+                Stage primaryStage = (Stage) shade.getScene().getWindow();
+                primaryStage.setScene(new Scene(next));
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+    }
+
+    @FXML
+    private void level2(MouseEvent mouseEvent)
+    {
+        ScaleTransition close2  = new ScaleTransition(Duration.seconds(1), shade);
+        close2.setByX(-78);
+        close2.setByY(-73);
+        shade.setVisible(true);
+        close2.play();
+
+        close2.setOnFinished((e)-> {
+            try {
+                Parent next = FXMLLoader.load(getClass().getClassLoader().getResource("./FXMLs/houseAndLawn2.fxml"));
+                Stage primaryStage = (Stage) shade.getScene().getWindow();
+                primaryStage.setScene(new Scene(next));
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+    }
+
+    @FXML
+    private void level3(MouseEvent mouseEvent)
+    {
+        ScaleTransition close3  = new ScaleTransition(Duration.seconds(1), shade);
+        close3.setByX(-78);
+        close3.setByY(-73);
+        shade.setVisible(true);
+        close3.play();
+
+        close3.setOnFinished((e)-> {
+            try {
+                Parent next = FXMLLoader.load(getClass().getClassLoader().getResource("./FXMLs/houseAndLawn3.fxml"));
+                Stage primaryStage = (Stage) shade.getScene().getWindow();
+                primaryStage.setScene(new Scene(next));
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+    }
 }
