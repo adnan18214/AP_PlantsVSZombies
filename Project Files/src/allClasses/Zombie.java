@@ -63,7 +63,6 @@ public class Zombie
     public void killZombie(){
         Lawn lawn = Lawn.getLawn();
 
-        movement.stop();
         PauseTransition pause = new PauseTransition();
         pause.setDuration(Duration.millis(400));
         pause.setOnFinished(e -> {
@@ -73,6 +72,15 @@ public class Zombie
         Image dying = new Image("./images/zombie_normal_dying.gif");
         zombieIV.setImage(dying);
         lawn.removeZombie(this);
+        movement.stop();
         pause.play();
+    }
+
+    public void stopZombie(){
+        movement.pause();
+    }
+
+    public void resumeZombie(){
+        movement.play();
     }
 }

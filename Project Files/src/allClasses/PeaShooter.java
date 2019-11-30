@@ -1,6 +1,8 @@
 package allClasses;
 
+import FXMLs.HouseAndLawnController;
 import javafx.animation.*;
+import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -11,43 +13,50 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 
 public class PeaShooter extends Plant implements shooterPlant{
-    private Image aliveGIF;
-    private Image dyingGIF;
     private Image peaBullet;
     private ImageView bulletIV;
-    private ImageView plantIV;
     private AnchorPane pane;
     private PathTransition movingBullet;
     private Timeline collider;
+    private final Bounds plantBounds;
 
     public PeaShooter(int x, int y, ArrayList zombies, ImageView plant){
-        super(100, x, y,"images/active_peashooter.png","images/inactive_peashooter.png", zombies);
+        super(100, 100, x, y,"images/active_peashooter.png","images/inactive_peashooter.png", zombies);
         aliveGIF = new Image("images/peashooter.gif");
         dyingGIF = new Image("images/peashooter_dying.gif");
         peaBullet = new Image("images/Pea.png");
         plantIV = plant;
 
-//        collider = new AnimationTimer() {
-//            @Override
-//            public void handle(long l) {
-//                Zombie frontZombie = attackingZombies.get(0);
-//                if(bulletIV.getBoundsInParent().intersects(frontZombie.getZombieIV().getBoundsInParent())){
-//                    bulletIV.setVisible(false);
-//                    frontZombie.attackZombie(25);
-//                }
-//            }
-//        };
-        collider = new Timeline(new KeyFrame(Duration.millis(150), e -> {
+        if(zombies != null)
+            plantBounds = ((GridPane) plantIV.getParent()).localToParent(plantIV.getBoundsInParent());
+        else
+            plantBounds = null;
+
+        collider = new Timeline(new KeyFrame(Duration.millis(70), e -> {
             if(isZombieAttacking()) {
-                Zombie frontZombie = attackingZombies.get(0);
-                if (bulletIV.getBoundsInParent().intersects(frontZombie.getZombieIV().getBoundsInParent())) {
-                    bulletIV.setVisible(false);
-                    frontZombie.attackZombie(5);
-                    System.out.println(frontZombie.getHealth());
-//                (new PauseTransition(Duration.seconds(0.5))).play();
-                }
-                if(!frontZombie.isAlive()){
-                    frontZombie.killZombie();
+                for (int i = 0; i < attackingZombies.size(); i++) {
+                    Zombie frontZombie = attackingZombies.get(i);
+                    if (bulletIV.getBoundsInParent().intersects(frontZombie.getZombieIV().getBoundsInParent())) {
+                        bulletIV.setVisible(false);
+                        frontZombie.attackZombie(5);
+//                        System.out.println(frontZombie.getHealth());
+                    }
+                    if (plantBounds.intersects(frontZombie.getZombieIV().getBoundsInParent())) {
+                        frontZombie.stopZombie();
+                        this.attackPlant(4);
+                    }
+                    if (!frontZombie.isAlive()) {
+                        i--;
+                        frontZombie.stopZombie();
+                        frontZombie.killZombie();
+                    }
+                    if (!this.isAlive()) {
+                        attackingZombies.forEach((Zombie z) -> {
+                            z.resumeZombie();
+                        });
+                        this.killPlant();
+                        break;
+                    }
                 }
             }
         }));
@@ -61,8 +70,6 @@ public class PeaShooter extends Plant implements shooterPlant{
     public Image getDyingGIF() {
         return dyingGIF;
     }
-
-
 
     /**
      * Creates animated bullets.
@@ -94,15 +101,29 @@ public class PeaShooter extends Plant implements shooterPlant{
         Line pPath = new Line(PEA.getX(), PEA.getY()+5, PEA.getX()+1000, PEA.getY()+5);
         movePea.setNode(PEA);
         movePea.setPath(pPath);
-        movePea.setDuration(Duration.seconds(2));
+        movePea.setDuration(Duration.seconds(1));
         movePea.setCycleCount(1);
         movingBullet = movePea;
     }
 
     @Override
     public void killPlant() {
+        collider.stop();
+        HouseAndLawnController.removeFromAnimationGroup(movingBullet);
         movingBullet.stop();
         pane.getChildren().remove(bulletIV);
+
+        Lawn lawn = Lawn.getLawn();
+
+        PauseTransition pause = new PauseTransition();
+        pause.setDuration(Duration.millis(400));
+        pause.setOnFinished(e -> {
+            ((GridPane) plantIV.getParent()).getChildren().removeAll(plantIV);
+        });
+
+        plantIV.setImage(dyingGIF);
+        lawn.removePlant(this);
+        pause.play();
     }
 
     @Override

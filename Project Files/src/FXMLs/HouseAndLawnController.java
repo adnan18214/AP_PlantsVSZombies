@@ -27,7 +27,7 @@ import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class HouseAndLawnController implements Initializable {
+public class HouseAndLawnController extends HouseAndLawnParent implements Initializable {
     @FXML
     private ImageView shade;
     @FXML
@@ -54,7 +54,6 @@ public class HouseAndLawnController implements Initializable {
     private Integer timeSeconds = WAVETIME;
     private Timeline zombieAnimation;
     private Timeline counter;
-    private ParallelTransition allTempTransitions;
     private PathTransition moveSun;
     private boolean dragSuccessful;
     private boolean shovelActivated;
@@ -73,8 +72,10 @@ public class HouseAndLawnController implements Initializable {
 
     public HouseAndLawnController()
     {
-        this.market.add(new PeaShooter(0,0, new ArrayList(), new ImageView()));
-        this.market.add(new SunFlower(0,0, sunTokenCount,sunFlower, new ArrayList()));
+        allTempTransitions = new ParallelTransition();
+        super.setAllTempTransitions(allTempTransitions);
+        this.market.add(new PeaShooter(0,0, null, null));
+        this.market.add(new SunFlower(0,0, null, null, null));
         shuffle.add(225);
         shuffle.add(325);
         shuffle.add(435);
@@ -87,16 +88,10 @@ public class HouseAndLawnController implements Initializable {
 
         ImageView zombie = new ImageView(moving);
         zombie.setX(x);
+
         int p = rand.nextInt(5);
         zombie.setY(shuffle.get(p));
         Zombie z = new Zombie(zombie, zombie.getX(), zombie.getY(), p+1, animationLayer);
-
-        int p1 = (shuffle.get(p)%100);
-        p1 = shuffle.get(p) - p1;
-        int index = (p1/100)-2;
-
-        System.out.println(index);
-
 
         animationLayer.getChildren().addAll(zombie);
         lawn.addZombie(z);
@@ -119,7 +114,6 @@ public class HouseAndLawnController implements Initializable {
             pause.play();
         });
 
-//        SequentialTransition s = new SequentialTransition(moveZombie,pause);
         moveZombie.play();
         z.setMovement(moveZombie);
     }
@@ -158,17 +152,6 @@ public class HouseAndLawnController implements Initializable {
 
     }
 
-    private void animateLawnMower(ImageView LM){
-        PathTransition moveLM = new PathTransition();
-        Line lmPath = new Line(LM.getX()+20, LM.getY()+30, LM.getX()+1400, LM.getY()+30);
-        moveLM.setNode(LM);
-        moveLM.setPath(lmPath);
-        moveLM.setDuration(Duration.seconds(4));
-//        moveLM.setDelay(Duration.seconds(4));
-        moveLM.setCycleCount(1);
-        moveLM.play();
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         shovelActivated = false;
@@ -178,13 +161,15 @@ public class HouseAndLawnController implements Initializable {
         open.setByX(80);
         open.setByY(75);
 
+        lawn.addLawnMower(lawnMower1, 1);
+        lawn.addLawnMower(lawnMower2, 2);
+        lawn.addLawnMower(lawnMower3, 3);
+        lawn.addLawnMower(lawnMower4, 4);
+        lawn.addLawnMower(lawnMower5, 5);
 
         zombieAnimation = new Timeline(new KeyFrame(Duration.seconds(10), (e)-> {
-            //int p = (rand.nextInt(2)+1);
-
-                animateZombie(new Image("./images/zombie_normal.gif"), new Image("./images/zombie_normal_dying.gif"), 1100);
+            animateZombie(new Image("./images/zombie_normal.gif"), new Image("./images/zombie_normal_dying.gif"), 1100);
         }));
-
         zombieAnimation.setCycleCount(10);
 
         countDown.setText(timeSeconds.toString());
@@ -202,33 +187,29 @@ public class HouseAndLawnController implements Initializable {
         open.play();
         open.setOnFinished((e)-> {
             shade.setVisible(false);
-            allTempTransitions = new ParallelTransition();
             animateSunToken();
             allTempTransitions.play();
             zombieAnimation.play();
             counter.play();
 
         });
-
-
-
     }
 
     public void update()
     {
-        /*if ((Integer.parseInt(sunTokenCount.getText()))<50)
-        {
-            Image i = new Image("./images/active_sunflower.png");
-            sunFlower.setImage(i);
-        }*/
-
-            System.out.println(market.get(1).getHealth());
-        System.out.println(Integer.parseInt(sunTokenCount.getText()));
-            if ((Integer.parseInt(sunTokenCount.getText())) >= market.get(1).getHealth())
-            {
-                Image temp = new Image(market.get(1).getActiveUrl());
-                sunFlower.setImage(temp);
+        for (int i=0; i<market.size();i++) {
+            if ((Integer.parseInt(sunTokenCount.getText())) >= market.get(i).getCost()) {
+                Image temp = new Image(market.get(i).getActiveUrl());
+                if (market.get(i).getActiveUrl().contains("sunflower"))
+                {
+                    sunFlower.setImage(temp);
+                }
+                else if (market.get(i).getActiveUrl().contains("peashooter"))
+                {
+                    peaShooter.setImage(temp);
+                };
             }
+        }
 
     }
 
@@ -254,7 +235,6 @@ public class HouseAndLawnController implements Initializable {
         ImageView button = (ImageView) mouseEvent.getSource();
         button.setEffect(null);
 
-
         try {
             Stage primaryStage = (Stage) ((ImageView) mouseEvent.getSource()).getScene().getWindow();
             Parent next = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("./FXMLs/pausemenu.fxml")));
@@ -275,6 +255,13 @@ public class HouseAndLawnController implements Initializable {
         moveSun.play();
         counter.play();
         allTempTransitions.play();
+    }
+
+    public void stopAnimations(){
+        zombieAnimation.stop();
+        moveSun.stop();
+        counter.stop();
+        allTempTransitions.stop();
     }
 
     @FXML
@@ -322,12 +309,9 @@ public class HouseAndLawnController implements Initializable {
             // Plant a new plant
 
             String location = dragEvent.getDragboard().getString();
-            if(location.contains("peashooter") || location.contains("beetroot")){
+            if(location.contains("peashooter")){
                 shooterPlant p;
-                if(location.contains("peashooter"))
-                    p = new PeaShooter(GridPane.getColumnIndex(target), GridPane.getRowIndex(target), lawn.getZombies(GridPane.getRowIndex(target)), target);
-                else
-                    p = new BeetRoot(GridPane.getColumnIndex(target), GridPane.getRowIndex(target), lawn.getZombies(GridPane.getRowIndex(target)));
+                p = new PeaShooter(GridPane.getColumnIndex(target), GridPane.getRowIndex(target), lawn.getZombies(GridPane.getRowIndex(target)), target);
 
                 target.setImage(p.getAliveGIF());
                 PathTransition movingBullet = p.shootBullets(target);
@@ -351,38 +335,30 @@ public class HouseAndLawnController implements Initializable {
                 });
                 addToAnimationGroup(movingBullet);
                 lawn.addPlant((Plant) p);
-//                ImageView x = p.getBullet();
-//                new AnimationTimer() {
-//                    @Override
-//                    public void handle(long now){
-//                        System.out.println(x.getBoundsInParent());
-//                    }
-//                }.start();
 
-            } else {
-                if(location.contains("walnut")){
-                    Walnut w = new Walnut(GridPane.getColumnIndex(target), GridPane.getRowIndex(target), lawn.getZombies(GridPane.getRowIndex(target)));
-                    target.setImage(w.getFullHealthGIF());
-                    lawn.addPlant(w);
+            } else if(location.contains("sunflower")){
+                SunFlower s = new SunFlower(GridPane.getColumnIndex(target), GridPane.getRowIndex(target), sunTokenCount, target, lawn.getZombies(GridPane.getRowIndex(target)));
+                target.setImage(s.getAliveGIF());
+                ((Plant) s).detectCollisions(true);
 
-                } else if(location.contains("sunflower")){
-                    SunFlower s = new SunFlower(GridPane.getColumnIndex(target), GridPane.getRowIndex(target), sunTokenCount, target, lawn.getZombies(GridPane.getRowIndex(target)));
-                    target.setImage(s.getAliveGIF());
-
-                    // Generate sun tokens
-                    SequentialTransition tokengen = s.generateTokens(sunTokenCount);
-                    tokengen.setOnFinished(e->{
-                        removeFromAnimationGroup(tokengen);
-                        tokengen.setDelay(Duration.seconds(ThreadLocalRandom.current().nextInt(5,8)));
-                        if(s.getToken().getImage() == null)
-                            s.getToken().setImage((new SunToken(sunTokenCount)).getSunImage());
-                        tokengen.play();
-                        addToAnimationGroup(tokengen);
-                    });
+                // Generate sun tokens
+                SequentialTransition tokengen = s.generateTokens(sunTokenCount);
+                tokengen.setOnFinished(e->{
+                    removeFromAnimationGroup(tokengen);
+                    tokengen.setDelay(Duration.seconds(ThreadLocalRandom.current().nextInt(5,8)));
+                    if(s.getToken().getImage() == null)
+                        s.getToken().setImage((new SunToken(sunTokenCount)).getSunImage());
                     tokengen.play();
                     addToAnimationGroup(tokengen);
-                    lawn.addPlant(s);
-                }
+
+                    if(((Plant) s).isZombieAttacking())
+                        ((Plant) s).detectCollisions(true);
+                    else
+                        ((Plant) s).detectCollisions(false);
+                });
+                tokengen.play();
+                addToAnimationGroup(tokengen);
+                lawn.addPlant(s);
             }
             dragSuccessful = true;
         }
@@ -399,21 +375,8 @@ public class HouseAndLawnController implements Initializable {
     }
 
     @FXML
-    private void testLawnMower(MouseEvent mouseEvent) {
-        animateLawnMower((ImageView) mouseEvent.getSource());
-    }
-
-    @FXML
     private void activateShovelAction(MouseEvent mouseEvent) {
         shovelActivated = true;
 
-    }
-
-    private void addToAnimationGroup(Animation a){
-        allTempTransitions.getChildren().add(a);
-    }
-
-    private void removeFromAnimationGroup(Animation a){
-        allTempTransitions.getChildren().remove(a);
     }
 }

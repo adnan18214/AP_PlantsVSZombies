@@ -1,13 +1,15 @@
 package allClasses;
 
+import javafx.scene.image.ImageView;
+
 import java.util.ArrayList;
 
 public class Lawn {
     private Plant[][] grid;
     private ArrayList<Plant> plantsPresent;
     private ArrayList<Zombie>[] zombiesPresent;
+    private ArrayList<lawnMower> allLawnMowers;
     private static Lawn lawn;
-    private Zombie[][] zombieList;
     private int j=0;
 
     private Lawn()
@@ -18,6 +20,7 @@ public class Lawn {
         for (int i = 0; i < 5; i++) {
             zombiesPresent[i] = new ArrayList<>();
         }
+        allLawnMowers = new ArrayList<>();
     }
 
     public static Lawn getLawn()
@@ -29,34 +32,21 @@ public class Lawn {
         return lawn;
     }
 
-    public void addPlant(Plant p){
-        grid[p.getX_COORDINATE()-1][p.getY_COORDINATE()-1] = p;
-        plantsPresent.add(p);
+    public void addLawnMower(ImageView lm, int r){
+        allLawnMowers.add(new lawnMower(lm, zombiesPresent[r-1]));
     }
 
-    public void addZombie(Zombie z, int y)
-    {
-        zombieList[j][y] = z;
-        j+=1;
+    public void addPlant(Plant p){
+        grid[p.getY_COORDINATE()-1][p.getX_COORDINATE()-1] = p;
+        plantsPresent.add(p);
     }
 
     public Plant getPlant(int x, int y){
         return grid[x-1][y-1];
     }
 
-    public void getZombie()
-    {
-        for (int i=0; i<5; i++)
-        {
-            for (int j=0; j<9; j++)
-            {
-                System.out.println(zombieList[i][j]);
-            }
-        }
-    }
-
     public void removePlant(Plant p){
-        grid[p.getX_COORDINATE()-1][p.getY_COORDINATE()-1] = null;
+        grid[p.getY_COORDINATE()-1][p.getX_COORDINATE()-1] = null;
         plantsPresent.remove(p);
     }
 

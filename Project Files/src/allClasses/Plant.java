@@ -1,23 +1,29 @@
 package allClasses;
 
-import java.util.ArrayList;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
-import javax.swing.text.html.ImageView;
+import java.util.ArrayList;
 
 public abstract class Plant {
     protected final int X_COORDINATE;
     protected final int Y_COORDINATE;
     protected final ArrayList<Zombie> attackingZombies;
+    protected ImageView plantIV;
+    protected Image aliveGIF;
+    protected Image dyingGIF;
     private int health;
+    private int cost;
     private boolean alive;
     private String active;
     private String inactive;
 
 
-    public Plant(int h, int x, int y, String ac, String in, ArrayList zombies){
+    public Plant(int c, int h, int x, int y, String ac, String in, ArrayList zombies){
         active = ac;
         inactive = in;
         health = h;
+        cost = c;
         X_COORDINATE = x;
         Y_COORDINATE = y;
         attackingZombies = zombies;
@@ -58,6 +64,10 @@ public abstract class Plant {
 
     public boolean isZombieAttacking(){
         return !attackingZombies.isEmpty();
+    }
+
+    public int getCost() {
+        return cost;
     }
 
     public abstract void killPlant();
