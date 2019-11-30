@@ -20,12 +20,14 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class HouseAndLawnController extends HouseAndLawnParent implements Initializable {
     @FXML
@@ -156,6 +158,10 @@ public class HouseAndLawnController extends HouseAndLawnParent implements Initia
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        AtomicReference<Boolean> flag1 = new AtomicReference<>(false);
+        AtomicReference<Boolean> flag2 = new AtomicReference<>(true);
+
         shovelActivated = false;
         lawn = Lawn.getLawn();
 
@@ -169,7 +175,8 @@ public class HouseAndLawnController extends HouseAndLawnParent implements Initia
         lawn.addLawnMower(lawnMower4, 4);
         lawn.addLawnMower(lawnMower5, 5);
 
-        zombieAnimation = new Timeline(new KeyFrame(Duration.seconds(10), (e)-> {
+        zombieAnimation = new Timeline(new KeyFrame(Duration.seconds(2), (e)-> {
+            flag1.set(true);
             animateZombie(new Image("./images/zombie_normal.gif"), new Image("./images/zombie_normal_dying.gif"), 1100);
         }));
         zombieAnimation.setCycleCount(10);
@@ -183,15 +190,21 @@ public class HouseAndLawnController extends HouseAndLawnParent implements Initia
                 if(timeSeconds < -3)
                     timeSeconds = WAVETIME;
             }
+            flag2.set(true);
             for(int i = 1; i <= 5; i++){
                 ArrayList<Zombie> zombies = lawn.getZombies(i);
                 if(!zombies.isEmpty()){
+                    flag2.set(false);
                     if(house.getBoundsInParent().intersects(zombies.get(0).getZombieIV().getBoundsInParent())){
                         stopAnimations();
                         youLostGame();
                         break;
                     }
                 }
+            }
+            if (flag1.get() && flag2.get()) {
+                stopAnimations();
+                youWin();
             }
         }));
         counter.setCycleCount(Timeline.INDEFINITE);
@@ -204,6 +217,26 @@ public class HouseAndLawnController extends HouseAndLawnParent implements Initia
             zombieAnimation.play();
             counter.play();
 
+        });
+    }
+
+    public void youWin()
+    {
+        ScaleTransition close  = new ScaleTransition(Duration.seconds(1), shade);
+        close.setByX(-78);
+        close.setByY(-73);
+        shade.toFront();
+        shade.setVisible(true);
+        close.play();
+
+        close.setOnFinished((e)-> {
+            try {
+                Parent next = FXMLLoader.load(getClass().getClassLoader().getResource("./FXMLs/winLevel.fxml"));
+                Stage primaryStage = (Stage) shade.getScene().getWindow();
+                primaryStage.setScene(new Scene(next));
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         });
     }
 
