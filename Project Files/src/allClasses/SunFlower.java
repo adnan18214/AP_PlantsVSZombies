@@ -83,7 +83,7 @@ public class SunFlower extends Plant{
 
         showingToken = new SequentialTransition(appear,pause,disappear);
         showingToken.setCycleCount(1);
-        showingToken.setDelay(Duration.seconds(3));
+        showingToken.setDelay(Duration.seconds(2));
 
         pane.getChildren().add(token);
         return showingToken;

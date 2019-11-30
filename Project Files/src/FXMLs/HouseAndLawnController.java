@@ -50,7 +50,7 @@ public class HouseAndLawnController extends HouseAndLawnParent implements Initia
     private ImageView sunFlower;
 
 
-    private static final Integer WAVETIME = 20;
+    private static final Integer WAVETIME = 10;
     private Integer timeSeconds = WAVETIME;
     private Timeline zombieAnimation;
     private Timeline counter;
@@ -370,6 +370,19 @@ public class HouseAndLawnController extends HouseAndLawnParent implements Initia
             String url = ((ImageView) dragEvent.getSource()).getImage().getUrl();
             url = url.replace("active", "inactive");
             ((ImageView) dragEvent.getSource()).setImage(new Image(url));
+            int suns = Integer.parseInt(sunTokenCount.getText());
+            if (url.contains("peashooter"))
+            {
+                suns-=100;
+
+                sunTokenCount.setText(Integer.toString(suns));
+            }
+            else if (url.contains("sunflower"))
+            {
+                suns-=50;
+
+                sunTokenCount.setText(Integer.toString(suns));
+            }
             dragSuccessful = false;
         }
     }
