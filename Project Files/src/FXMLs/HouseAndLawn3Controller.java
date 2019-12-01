@@ -253,25 +253,21 @@ public class HouseAndLawn3Controller extends HouseAndLawnParent implements Initi
 
     public void update()
     {
-        for (int i=0; i<market.size();i++) {
-            if ((Integer.parseInt(sunTokenCount.getText())) >= market.get(i).getCost()) {
-                Image temp = new Image(market.get(i).getActiveUrl());
-                if (market.get(i).getActiveUrl().contains("sunflower"))
-                {
-                    sunFlower.setImage(temp);
-                }
-                else if (market.get(i).getActiveUrl().contains("peashooter"))
-                {
-                    peaShooter.setImage(temp);
-                }
-                else if (market.get(i).getActiveUrl().contains("walnut"))
-                {
-                    walNut.setImage(temp);
-                }
-                else if (market.get(i).getActiveUrl().contains("beetroot"))
-                {
-                    beetRoot.setImage(temp);
-                }
+        for (Plant plant : market) {
+            Image currentStatus;
+            if ((Integer.parseInt(sunTokenCount.getText())) >= plant.getCost())
+                currentStatus = new Image(plant.getActiveUrl());
+            else
+                currentStatus = new Image(plant.getInactiveUrl());
+
+            if (plant.getActiveUrl().contains("sunflower")) {
+                sunFlower.setImage(currentStatus);
+            } else if (plant.getActiveUrl().contains("peashooter")) {
+                peaShooter.setImage(currentStatus);
+            } else if (plant.getActiveUrl().contains("walnut")) {
+                walNut.setImage(currentStatus);
+            } else if (plant.getActiveUrl().contains("beetroot")) {
+                beetRoot.setImage(currentStatus);
             }
         }
 
@@ -415,6 +411,7 @@ public class HouseAndLawn3Controller extends HouseAndLawnParent implements Initi
                         ((Plant) p).detectCollisions(false);
                         movingBullet.setNode(new ImageView());
                         Bullet.setDisable(true);
+                        Bullet.setVisible(false);
                     }
                     movingBullet.play();
                     addToAnimationGroup(movingBullet);

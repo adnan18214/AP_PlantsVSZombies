@@ -26,6 +26,7 @@ import java.util.Objects;
 import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class HouseAndLawnController extends HouseAndLawnParent implements Initializable {
@@ -143,7 +144,6 @@ public class HouseAndLawnController extends HouseAndLawnParent implements Initia
         appearToken.play();
 
         moveSun.setOnFinished(e -> {
-            update();
             double newX = ThreadLocalRandom.current().nextDouble(200,850);
             moveSun.setPath(new Line(newX, y+10, newX, y+800));
             moveSun.setDelay(Duration.seconds(ThreadLocalRandom.current().nextInt(5,10)));
@@ -158,7 +158,7 @@ public class HouseAndLawnController extends HouseAndLawnParent implements Initia
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        AtomicReference<Boolean> flag1 = new AtomicReference<>(false);
+        AtomicInteger count = new AtomicInteger();
         AtomicReference<Boolean> flag2 = new AtomicReference<>(true);
 
         shovelActivated = false;
@@ -175,13 +175,14 @@ public class HouseAndLawnController extends HouseAndLawnParent implements Initia
         lawn.addLawnMower(lawnMower5, 5);
 
         zombieAnimation = new Timeline(new KeyFrame(Duration.seconds(10), (e)-> {
-            flag1.set(true);
+            count.getAndIncrement();
             animateZombie(new LocalZombie(), 1100);
         }));
         zombieAnimation.setCycleCount(10);
 
         countDown.setText(timeSeconds.toString());
         counter = new Timeline(new KeyFrame(Duration.seconds(1), actionEvent -> {
+            update();
             countDown.setText(timeSeconds.toString());
             timeSeconds--;
             if(timeSeconds < 0){
@@ -201,7 +202,7 @@ public class HouseAndLawnController extends HouseAndLawnParent implements Initia
                     }
                 }
             }
-            if (flag1.get() && flag2.get()) {
+            if (count.get() == 10 && flag2.get()) {
                 stopAnimations();
                 youWin();
             }
@@ -241,17 +242,17 @@ public class HouseAndLawnController extends HouseAndLawnParent implements Initia
 
     public void update()
     {
-        for (int i=0; i<market.size();i++) {
-            if ((Integer.parseInt(sunTokenCount.getText())) >= market.get(i).getCost()) {
-                Image temp = new Image(market.get(i).getActiveUrl());
-                if (market.get(i).getActiveUrl().contains("sunflower"))
-                {
-                    sunFlower.setImage(temp);
-                }
-                else if (market.get(i).getActiveUrl().contains("peashooter"))
-                {
-                    peaShooter.setImage(temp);
-                };
+        for (Plant plant : market) {
+            Image currentStatus;
+            if ((Integer.parseInt(sunTokenCount.getText())) >= plant.getCost())
+                currentStatus = new Image(plant.getActiveUrl());
+            else
+                currentStatus = new Image(plant.getInactiveUrl());
+
+            if (plant.getActiveUrl().contains("sunflower")) {
+                sunFlower.setImage(currentStatus);
+            } else if (plant.getActiveUrl().contains("peashooter")) {
+                peaShooter.setImage(currentStatus);
             }
         }
 
@@ -392,6 +393,7 @@ public class HouseAndLawnController extends HouseAndLawnParent implements Initia
                         ((Plant) p).detectCollisions(false);
                         movingBullet.setNode(new ImageView());
                         Bullet.setDisable(true);
+                        Bullet.setVisible(false);
                     }
                     movingBullet.play();
                     addToAnimationGroup(movingBullet);

@@ -82,10 +82,15 @@ public class pausemenuController implements Initializable {
 
         close.setOnFinished((e)-> {
             try {
+                Scene lastScene = Main.getLastScene();
+                FXMLLoader l = (FXMLLoader) lastScene.getUserData();
+                HouseAndLawnParent h = l.getController();
+                h.stopAnimations();
+
                 Parent next = FXMLLoader.load(getClass().getClassLoader().getResource("./FXMLs/houseAndLawn.fxml"));
                 Stage primaryStage = (Stage) shade.getScene().getWindow();
                 primaryStage.setScene(new Scene(next));
-                Main.getLastScene();
+
             } catch (IOException ex) {
                 ex.printStackTrace();
             }

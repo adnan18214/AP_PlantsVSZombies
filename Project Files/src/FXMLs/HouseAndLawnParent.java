@@ -3,7 +3,7 @@ package FXMLs;
 import javafx.animation.Animation;
 import javafx.animation.ParallelTransition;
 
-public class HouseAndLawnParent {
+public abstract class HouseAndLawnParent {
     protected static ParallelTransition allTempTransitions;
 
     public static void addToAnimationGroup(Animation a){
@@ -17,4 +17,7 @@ public class HouseAndLawnParent {
     public void setAllTempTransitions(ParallelTransition PT){
         allTempTransitions = PT;
     }
+
+    public abstract void resumeAnimations();
+    public abstract void stopAnimations();
 }

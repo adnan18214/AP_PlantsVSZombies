@@ -21,8 +21,8 @@ import java.util.ResourceBundle;
 public class EnterNameController implements Initializable {
     @FXML
     private ImageView shade;
-    @FXML
-    private TextField text;
+//    @FXML
+//    private TextField text;
     @FXML
     private void goBackToLogin(ActionEvent actionEvent) {
         Node source = (Node) actionEvent.getSource();
@@ -47,7 +47,7 @@ public class EnterNameController implements Initializable {
 
         close.setOnFinished((e)-> {
             try {
-                Parent next = FXMLLoader.load(getClass().getClassLoader().getResource("./FXMLs/houseAndLawn.fxml"));
+                Parent next = FXMLLoader.load(getClass().getClassLoader().getResource("./FXMLs/mainMenu.fxml"));
                 Stage primaryStage = (Stage) shade.getScene().getWindow();
                 primaryStage.setScene(new Scene(next));
             } catch (IOException ex) {
@@ -55,10 +55,10 @@ public class EnterNameController implements Initializable {
             }
         });
     }
-
-    public String getUser()
-    {
-        String user = text.getText();
-        return user;
-    }
+//
+//    public String getUser()
+//    {
+//        String user = text.getText();
+//        return user;
+//    }
 }

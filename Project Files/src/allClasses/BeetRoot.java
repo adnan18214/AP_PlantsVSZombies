@@ -36,8 +36,9 @@ public class BeetRoot extends Plant implements shooterPlant{
             if(isZombieAttacking()) {
                 for (int i = 0; i < attackingZombies.size(); i++) {
                     Zombie frontZombie = attackingZombies.get(i);
-                    if (bulletIV.getBoundsInParent().intersects(frontZombie.getZombieIV().getBoundsInParent())) {
+                    if (bulletIV.getBoundsInParent().intersects(frontZombie.getZombieIV().getBoundsInParent()) && !bulletIV.isDisabled()) {
                         bulletIV.setVisible(false);
+                        bulletIV.setDisable(true);
                         frontZombie.attackZombie(5);
 //                        System.out.println(frontZombie.getHealth());
                     }
