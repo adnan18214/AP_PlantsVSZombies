@@ -11,10 +11,11 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class WelcomeLogoController implements Initializable {
+public class WelcomeLogoController implements Initializable, Serializable {
     @FXML
     private ImageView shade;
 

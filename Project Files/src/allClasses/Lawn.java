@@ -2,9 +2,10 @@ package allClasses;
 
 import javafx.scene.image.ImageView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Lawn {
+public class Lawn implements Serializable {
     private Plant[][] grid;
     private ArrayList<Plant> plantsPresent;
     private ArrayList<Zombie>[] zombiesPresent;

@@ -6,7 +6,9 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.stage.Stage;
 
-public class HighScoreController {
+import java.io.Serializable;
+
+public class HighScoreController implements Serializable {
     @FXML
     private void goBackToMainMenu(ActionEvent actionEvent) {
         Node source = (Node) actionEvent.getSource();

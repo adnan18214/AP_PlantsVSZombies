@@ -2,7 +2,9 @@ package allClasses;
 
 import javafx.scene.image.Image;
 
-public class LocalZombie extends DrawableZombie {
+import java.io.Serializable;
+
+public class LocalZombie extends DrawableZombie implements Serializable {
     private int health;
 
     public LocalZombie(){

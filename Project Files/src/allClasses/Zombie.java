@@ -9,7 +9,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Path;
 import javafx.util.Duration;
 
-public class Zombie
+import java.io.Serializable;
+
+public class Zombie implements Serializable
 {
     private double posX;
     private double posY;

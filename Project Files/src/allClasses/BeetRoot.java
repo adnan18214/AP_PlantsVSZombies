@@ -10,9 +10,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Line;
 import javafx.util.Duration;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class BeetRoot extends Plant implements shooterPlant{
+public class BeetRoot extends Plant implements shooterPlant, Serializable {
     private Image beetBullet;
     private PathTransition movingBullet;
     private ImageView bulletIV;

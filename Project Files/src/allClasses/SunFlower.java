@@ -11,9 +11,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class SunFlower extends Plant{
+public class SunFlower extends Plant implements Serializable {
     private Text sunTokenCount;
     private ImageView token;
     private AnchorPane pane;

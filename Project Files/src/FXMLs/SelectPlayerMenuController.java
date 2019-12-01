@@ -15,10 +15,11 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class SelectPlayerMenuController implements Initializable {
+public class SelectPlayerMenuController implements Initializable, Serializable {
     @FXML
     private ImageView existingPlayer;
     @FXML
