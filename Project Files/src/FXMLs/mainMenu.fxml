@@ -7,6 +7,11 @@
 
 <AnchorPane prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXMLs.mainMenuController">
    <children>
+      <ImageView fx:id="shade" blendMode="MULTIPLY" fitHeight="768.0" fitWidth="1024.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/transition.png" />
+         </image>
+      </ImageView>
       <ImageView fitHeight="768.0" fitWidth="1024.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/bgLogin.jpg" />
@@ -20,22 +25,17 @@
             <Image url="@../images/logo2.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="loadGame" fitHeight="54.0" fitWidth="345.0" layoutX="347.0" layoutY="330.0" onMouseEntered="#makeGlow" onMouseExited="#removeEffect" onMousePressed="#makeDark" onMouseReleased="#loadSavedGame" pickOnBounds="true" scaleY="2.0">
+      <ImageView fx:id="loadGame" fitHeight="54.0" fitWidth="345.0" layoutX="347.0" layoutY="345.0" onMouseEntered="#makeGlow" onMouseExited="#removeEffect" onMousePressed="#makeDark" onMouseReleased="#loadSavedGame" pickOnBounds="true" scaleY="2.0">
          <image>
             <Image url="@../images/loadGame.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="chooseLevel" fitHeight="55.0" fitWidth="345.0" layoutX="346.0" layoutY="419.0" onMouseEntered="#makeGlow" onMouseExited="#removeEffect" onMousePressed="#makeDark" onMouseReleased="#chooseLevel" pickOnBounds="true" scaleY="2.0">
+      <ImageView fx:id="chooseLevel" fitHeight="55.0" fitWidth="345.0" layoutX="346.0" layoutY="450.0" onMouseEntered="#makeGlow" onMouseExited="#removeEffect" onMousePressed="#makeDark" onMouseReleased="#chooseLevel" pickOnBounds="true" scaleY="2.0">
          <image>
             <Image url="@../images/chooseLevel.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="settings" fitHeight="53.0" fitWidth="345.0" layoutX="346.0" layoutY="508.0" onMouseEntered="#makeGlow" onMouseExited="#removeEffect" onMousePressed="#makeDark" onMouseReleased="#removeEffect" pickOnBounds="true" scaleY="2.0">
-         <image>
-            <Image url="@../images/settings.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="highScores" fitHeight="53.0" fitWidth="345.0" layoutX="347.0" layoutY="598.0" onMouseEntered="#makeGlow" onMouseExited="#removeEffect" onMousePressed="#makeDark" onMouseReleased="#showHighscores" pickOnBounds="true" scaleY="2.0">
+      <ImageView fx:id="highScores" fitHeight="53.0" fitWidth="345.0" layoutX="347.0" layoutY="554.0" onMouseEntered="#makeGlow" onMouseExited="#removeEffect" onMousePressed="#makeDark" onMouseReleased="#showHighscores" pickOnBounds="true" scaleY="2.0">
          <image>
             <Image url="@../images/highScores.png" />
          </image>
@@ -45,14 +45,9 @@
             <Image url="@../images/startGame.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="logOut" fitHeight="106.0" fitWidth="345.0" layoutX="347.0" layoutY="657.0" onMouseEntered="#makeGlow" onMouseExited="#removeEffect" onMousePressed="#makeDark" onMouseReleased="#logOut" pickOnBounds="true">
+      <ImageView fx:id="logOut" fitHeight="106.0" fitWidth="345.0" layoutX="347.0" layoutY="629.0" onMouseEntered="#makeGlow" onMouseExited="#removeEffect" onMousePressed="#makeDark" onMouseReleased="#logOut" pickOnBounds="true">
          <image>
             <Image url="@../images/logOut.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="shade" blendMode="MULTIPLY" fitHeight="768.0" fitWidth="1024.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/transition.png" />
          </image>
       </ImageView>
    </children>

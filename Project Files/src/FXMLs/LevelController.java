@@ -27,6 +27,10 @@ public class LevelController implements Initializable , Serializable {
     @FXML
     private ImageView level3;
     @FXML
+    private ImageView level4;
+    @FXML
+    private ImageView level5;
+    @FXML
     private ImageView shade;
 
     @FXML
@@ -129,6 +133,46 @@ public class LevelController implements Initializable , Serializable {
         close3.setOnFinished((e)-> {
             try {
                 Parent next = FXMLLoader.load(getClass().getClassLoader().getResource("./FXMLs/houseAndLawn3.fxml"));
+                Stage primaryStage = (Stage) shade.getScene().getWindow();
+                primaryStage.setScene(new Scene(next));
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+    }
+
+    @FXML
+    private void level4(MouseEvent mouseEvent)
+    {
+        ScaleTransition close1  = new ScaleTransition(Duration.seconds(1), shade);
+        close1.setByX(-78);
+        close1.setByY(-73);
+        shade.setVisible(true);
+        close1.play();
+
+        close1.setOnFinished((e)-> {
+            try {
+                Parent next = FXMLLoader.load(getClass().getClassLoader().getResource("./FXMLs/houseAndLawn4.fxml"));
+                Stage primaryStage = (Stage) shade.getScene().getWindow();
+                primaryStage.setScene(new Scene(next));
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+    }
+
+    @FXML
+    private void level5(MouseEvent mouseEvent)
+    {
+        ScaleTransition close1  = new ScaleTransition(Duration.seconds(1), shade);
+        close1.setByX(-78);
+        close1.setByY(-73);
+        shade.setVisible(true);
+        close1.play();
+
+        close1.setOnFinished((e)-> {
+            try {
+                Parent next = FXMLLoader.load(getClass().getClassLoader().getResource("./FXMLs/houseAndLawn5.fxml"));
                 Stage primaryStage = (Stage) shade.getScene().getWindow();
                 primaryStage.setScene(new Scene(next));
             } catch (IOException ex) {

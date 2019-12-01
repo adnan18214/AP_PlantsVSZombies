@@ -5,7 +5,6 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
 <AnchorPane maxHeight="786.0" maxWidth="1024.0" prefHeight="786.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXMLs.UserNotFound">
    <children>
       <ImageView fitHeight="788.0" fitWidth="1024.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true" scaleY="1.06">
@@ -16,9 +15,14 @@
             <GaussianBlur />
          </effect>
       </ImageView>
-      <ImageView fitHeight="387.0" fitWidth="698.0" layoutX="158.0" layoutY="245.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="387.0" fitWidth="698.0" layoutX="145.0" layoutY="338.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/UserNotFound.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="166.0" fitWidth="466.0" layoutX="281.0" layoutY="131.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/logo2.png" />
          </image>
       </ImageView>
    </children>

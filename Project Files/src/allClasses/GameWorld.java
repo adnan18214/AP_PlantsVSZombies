@@ -11,6 +11,7 @@ public class GameWorld implements Serializable {
         return scene;
     }
 
+
     public void setScene(Scene scene) {
         this.scene = scene;
 
