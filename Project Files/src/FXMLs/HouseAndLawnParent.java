@@ -3,7 +3,9 @@ package FXMLs;
 import javafx.animation.Animation;
 import javafx.animation.ParallelTransition;
 
-public class HouseAndLawnParent {
+import java.io.Serializable;
+
+public class HouseAndLawnParent implements Serializable {
     protected static ParallelTransition allTempTransitions;
 
     public static void addToAnimationGroup(Animation a){

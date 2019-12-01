@@ -2,7 +2,9 @@ package allClasses;
 
 import javafx.scene.image.Image;
 
-public abstract class DrawableZombie {
+import java.io.Serializable;
+
+public abstract class DrawableZombie implements Serializable {
     protected Image aliveGIF;
     protected Image dyingGIF;
 

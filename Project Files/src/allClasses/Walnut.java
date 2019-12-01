@@ -7,10 +7,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.util.Duration;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class Walnut extends Plant{
+public class Walnut extends Plant implements Serializable {
 
     private int halfHealth;
     private Image halfHealthGIF;

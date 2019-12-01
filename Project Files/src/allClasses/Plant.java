@@ -3,9 +3,10 @@ package allClasses;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public abstract class Plant {
+public abstract class Plant implements Serializable {
     protected final int X_COORDINATE;
     protected final int Y_COORDINATE;
     protected final ArrayList<Zombie> attackingZombies;

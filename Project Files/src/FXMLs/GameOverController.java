@@ -13,10 +13,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class GameOverController implements Initializable
+public class GameOverController implements Initializable, Serializable
     {
         @FXML
         private ImageView shade;

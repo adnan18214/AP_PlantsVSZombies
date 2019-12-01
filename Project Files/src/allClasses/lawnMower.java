@@ -9,9 +9,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.shape.Line;
 import javafx.util.Duration;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class lawnMower {
+public class lawnMower implements Serializable {
     private ImageView lawnMowerIV;
     private PathTransition moveLM;
     private ArrayList<Zombie> attackingZombies;

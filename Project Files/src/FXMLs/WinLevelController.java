@@ -13,15 +13,16 @@ import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class WinLevelController implements Initializable
+public class WinLevelController implements Initializable, Serializable
 {
     @FXML
     private ImageView shade;
 
-    public WinLevelController() {
+    public WinLevelController(String p) {
         PauseTransition pause = new PauseTransition(Duration.seconds(5));
         pause.setOnFinished(e -> {
             goToSelectPlayerMenu();

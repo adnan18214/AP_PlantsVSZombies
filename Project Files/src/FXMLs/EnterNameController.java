@@ -9,20 +9,22 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.awt.*;
+
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class EnterNameController implements Initializable {
+public class EnterNameController implements Initializable, Serializable {
     @FXML
     private ImageView shade;
     @FXML
-    private TextField text;
+    private TextField nameText;
     @FXML
     private void goBackToLogin(ActionEvent actionEvent) {
         Node source = (Node) actionEvent.getSource();
@@ -39,6 +41,9 @@ public class EnterNameController implements Initializable {
 
     @FXML
     private void goToMainMenu(ActionEvent actionEvent) {
+        String userName = nameText.getText();
+
+
         ScaleTransition close  = new ScaleTransition(Duration.seconds(1), shade);
         close.setByX(-78);
         close.setByY(-73);
@@ -54,11 +59,5 @@ public class EnterNameController implements Initializable {
                 ex.printStackTrace();
             }
         });
-    }
-
-    public String getUser()
-    {
-        String user = text.getText();
-        return user;
     }
 }

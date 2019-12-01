@@ -4,7 +4,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 
-public class SunToken {
+import java.io.Serializable;
+
+public class SunToken implements Serializable {
     private Image sun;
     private Text sunTokenCount;
 

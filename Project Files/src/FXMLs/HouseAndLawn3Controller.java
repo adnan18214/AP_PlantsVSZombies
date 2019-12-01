@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -28,7 +29,7 @@ import java.util.ResourceBundle;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class HouseAndLawn3Controller extends HouseAndLawnParent implements Initializable {
+public class HouseAndLawn3Controller extends HouseAndLawnParent implements Initializable, Serializable {
     @FXML
     private ImageView shade;
     @FXML
