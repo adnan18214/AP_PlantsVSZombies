@@ -9,13 +9,8 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="animationLayer" maxHeight="768.0" maxWidth="1024.0" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXMLs.HouseAndLawn2Controller">
+<AnchorPane fx:id="animationLayer" maxHeight="768.0" maxWidth="1024.0" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXMLs.HouseAndLawn5Controller">
     <children>
-        <ImageView fx:id="shade" fitHeight="768.0" fitWidth="1024.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@../images/transition.png" />
-            </image>
-        </ImageView>
         <ImageView fitHeight="768.0" fitWidth="1024.0" layoutY="98.0" pickOnBounds="true" preserveRatio="true" scaleY="1.007">
             <image>
                 <Image url="@../images/lawn.jpg" />
@@ -111,12 +106,12 @@
                 <ImageView fitHeight="78.0" fitWidth="85.0" onDragDropped="#manageDragDrop" onDragOver="#manageDragOver" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
             </children>
         </GridPane>
-        <ImageView fitHeight="99.0" fitWidth="95.0" layoutX="834.0" layoutY="1.0" onDragDetected="#manageDragDetected" onDragDone="#manageDragDone" onMouseDragged="#makeDark" onMouseEntered="#makeGlow" onMouseExited="#removeEffect" onMousePressed="#makeDark" onMouseReleased="#removeEffect" pickOnBounds="true" preserveRatio="true" scaleY="1.02">
+        <ImageView fx:id="walNut" fitHeight="99.0" fitWidth="95.0" layoutX="834.0" layoutY="1.0" onDragDetected="#manageDragDetected" onDragDone="#manageDragDone" onMouseDragged="#makeDark" onMouseEntered="#makeGlow" onMouseExited="#removeEffect" onMousePressed="#makeDark" onMouseReleased="#removeEffect" pickOnBounds="true" preserveRatio="true" scaleY="1.02">
             <image>
-                <Image url="@../images/inactive_sunflower.png" />
+                <Image url="@../images/inactive_walnut.png" />
             </image>
         </ImageView>
-        <ImageView fitHeight="98.0" fitWidth="95.0" layoutX="739.0" onDragDetected="#manageDragDetected" onDragDone="#manageDragDone" onMouseDragged="#makeDark" onMouseEntered="#makeGlow" onMouseExited="#removeEffect" onMousePressed="#makeDark" onMouseReleased="#removeEffect" pickOnBounds="true" preserveRatio="true" scaleY="1.02">
+        <ImageView fx:id="peaShooter" fitHeight="98.0" fitWidth="95.0" layoutX="644.0" layoutY="1.0" onDragDetected="#manageDragDetected" onDragDone="#manageDragDone" onMouseDragged="#makeDark" onMouseEntered="#makeGlow" onMouseExited="#removeEffect" onMousePressed="#makeDark" onMouseReleased="#removeEffect" pickOnBounds="true" preserveRatio="true" scaleY="1.02">
             <image>
                 <Image url="@../images/inactive_peashooter.png" />
             </image>
@@ -157,11 +152,21 @@
                 <Image url="@../images/shovel.png" />
             </image>
         </ImageView>
-        <ImageView fitHeight="99.0" fitWidth="95.0" layoutX="929.0" layoutY="1.0" onDragDetected="#manageDragDetected" onDragDone="#manageDragDone" onMouseDragged="#makeDark" onMouseEntered="#makeGlow" onMouseExited="#removeEffect" onMousePressed="#makeDark" onMouseReleased="#removeEffect" pickOnBounds="true" preserveRatio="true" scaleY="1.02">
+        <ImageView fx:id="sunFlower" fitHeight="99.0" fitWidth="95.0" layoutX="739.0" layoutY="1.0" onDragDetected="#manageDragDetected" onDragDone="#manageDragDone" onMouseDragged="#makeDark" onMouseEntered="#makeGlow" onMouseExited="#removeEffect" onMousePressed="#makeDark" onMouseReleased="#removeEffect" pickOnBounds="true" preserveRatio="true" scaleY="1.02">
             <image>
-                <Image url="@../images/inactive_walnut.png" />
+                <Image url="@../images/inactive_sunflower.png" />
+            </image>
+        </ImageView>
+        <ImageView fx:id="beetRoot" fitHeight="99.0" fitWidth="95.0" layoutX="929.0" layoutY="1.0" onDragDetected="#manageDragDetected" onDragDone="#manageDragDone" onMouseDragged="#makeDark" onMouseEntered="#makeGlow" onMouseExited="#removeEffect" onMousePressed="#makeDark" onMouseReleased="#removeEffect" pickOnBounds="true" preserveRatio="true" scaleY="1.02">
+            <image>
+                <Image url="@../images/inactive_beetroot.png" />
             </image>
         </ImageView>
         <ImageView fx:id="house" fitHeight="618.0" fitWidth="88.0" layoutX="10.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true" />
+        <ImageView fx:id="shade" fitHeight="768.0" fitWidth="1024.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../images/transition.png" />
+            </image>
+        </ImageView>
     </children>
 </AnchorPane>
