@@ -29,4 +29,8 @@ public class User implements Serializable {
     {
         return savedGames.get(i);
     }
+
+    public void saveGame(GameWorld g){
+        savedGames.add(g);
+    }
 }

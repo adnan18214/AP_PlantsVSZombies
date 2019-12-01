@@ -1,7 +1,10 @@
 package FXMLs;
 
+import allClasses.GameWorld;
 import allClasses.Main;
+import allClasses.User;
 import javafx.animation.ScaleTransition;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -103,6 +106,36 @@ public class pausemenuController implements Initializable, Serializable {
         shade.setScaleX(80);
         shade.setScaleY(75);
         shade.setVisible(false);
+    }
+
+    @FXML
+    private void saveGame(ActionEvent actionEvent) {
+        User currentUser = Main.getCurrentUser();
+        GameWorld currentGame = new GameWorld();
+
+        Scene lastScene = Main.getLastScene();
+        FXMLLoader l = (FXMLLoader) lastScene.getUserData();
+        HouseAndLawnParent h = l.getController();
+        h.stopAnimations();
+
+        currentGame.setScene(lastScene);
+        currentUser.saveGame(currentGame);
+
+        ScaleTransition close  = new ScaleTransition(Duration.seconds(1), shade);
+        close.setByX(-78);
+        close.setByY(-73);
+        shade.setVisible(true);
+        close.play();
+
+        close.setOnFinished((e)-> {
+            try {
+                Parent next = FXMLLoader.load(getClass().getClassLoader().getResource("./FXMLs/mainMenu.fxml"));
+                Stage primaryStage = (Stage) shade.getScene().getWindow();
+                primaryStage.setScene(new Scene(next));
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
     }
 }
 

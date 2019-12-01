@@ -10,6 +10,16 @@ import java.util.Stack;
 
 
 public class Main extends Application {
+    private static User currentUser;
+
+    public static User getCurrentUser() {
+        return currentUser;
+    }
+
+    public static void setCurrentUser(User currentUser) {
+        Main.currentUser = currentUser;
+    }
+
     public static void main(String[] args) {
         launch(args);
     }

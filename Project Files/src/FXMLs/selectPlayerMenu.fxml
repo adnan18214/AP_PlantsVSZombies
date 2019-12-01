@@ -20,7 +20,7 @@
             <Image url="@../images/logo2.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="existingPlayer" fitHeight="130.0" fitWidth="500.0" layoutX="262.0" layoutY="285.0" onMouseEntered="#makeGlow" onMouseExited="#removeEffect" onMousePressed="#makeDark" onMouseReleased="#enterPlayerName" pickOnBounds="true" scaleY="2.0">
+      <ImageView fx:id="existingPlayer" fitHeight="130.0" fitWidth="500.0" layoutX="262.0" layoutY="285.0" onMouseEntered="#makeGlow" onMouseExited="#removeEffect" onMousePressed="#makeDark" onMouseReleased="#enterExistingPlayerName" pickOnBounds="true" scaleY="2.0">
          <image>
             <Image url="@../images/selectPlayer_B.png" />
          </image>
@@ -30,7 +30,7 @@
             <Image url="@../images/playGuest_B.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="newPlayer" fitHeight="130.0" fitWidth="500.0" layoutX="262.0" layoutY="520.0" onMouseEntered="#makeGlow" onMouseExited="#removeEffect" onMousePressed="#makeDark" onMouseReleased="#enterPlayerName" pickOnBounds="true" scaleY="2.0">
+      <ImageView fx:id="newPlayer" fitHeight="130.0" fitWidth="500.0" layoutX="262.0" layoutY="520.0" onMouseEntered="#makeGlow" onMouseExited="#removeEffect" onMousePressed="#makeDark" onMouseReleased="#createNewPlayerName" pickOnBounds="true" scaleY="2.0">
          <image>
             <Image url="@../images/createPlayer_B.png" />
          </image>

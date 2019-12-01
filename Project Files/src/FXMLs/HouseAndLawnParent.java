@@ -5,7 +5,7 @@ import javafx.animation.ParallelTransition;
 
 import java.io.Serializable;
 
-public class HouseAndLawnParent implements Serializable {
+public abstract class HouseAndLawnParent implements Serializable {
     protected static ParallelTransition allTempTransitions;
 
     public static void addToAnimationGroup(Animation a){

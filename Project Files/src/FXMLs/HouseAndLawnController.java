@@ -51,7 +51,6 @@ public class HouseAndLawnController extends HouseAndLawnParent implements Initia
     private ImageView peaShooter;
     @FXML
     private ImageView sunFlower;
-    
 
 
     private static final Integer WAVETIME = 10;

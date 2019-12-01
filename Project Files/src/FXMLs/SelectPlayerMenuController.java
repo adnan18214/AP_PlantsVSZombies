@@ -76,12 +76,27 @@ public class SelectPlayerMenuController implements Initializable, Serializable {
     }
 
     @FXML
-    private void enterPlayerName(MouseEvent mouseEvent) {
+    private void enterExistingPlayerName(MouseEvent mouseEvent) {
         ImageView button = (ImageView) mouseEvent.getSource();
         button.setEffect(null);
 
         try {
-            Parent next = FXMLLoader.load(getClass().getClassLoader().getResource("./FXMLs/enterName.fxml"));
+            Parent next = FXMLLoader.load(getClass().getClassLoader().getResource("./FXMLs/enterNameExisting.fxml"));
+            Stage primaryStage = (Stage) ((ImageView) mouseEvent.getSource()).getScene().getWindow();
+            Main.saveScene(primaryStage.getScene());
+            primaryStage.setScene(new Scene(next));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void createNewPlayerName(MouseEvent mouseEvent) {
+        ImageView button = (ImageView) mouseEvent.getSource();
+        button.setEffect(null);
+
+        try {
+            Parent next = FXMLLoader.load(getClass().getClassLoader().getResource("./FXMLs/enterNameCreate.fxml"));
             Stage primaryStage = (Stage) ((ImageView) mouseEvent.getSource()).getScene().getWindow();
             Main.saveScene(primaryStage.getScene());
             primaryStage.setScene(new Scene(next));
@@ -92,6 +107,8 @@ public class SelectPlayerMenuController implements Initializable, Serializable {
 
     @FXML
     private void goToMainMenu(MouseEvent mouseEvent) {
+        Main.setCurrentUser(null);
+
         ScaleTransition close  = new ScaleTransition(Duration.seconds(1), shade);
         close.setByX(-78);
         close.setByY(-73);

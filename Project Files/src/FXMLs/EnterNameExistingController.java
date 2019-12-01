@@ -1,6 +1,8 @@
 package FXMLs;
 import allClasses.Main;
 
+import allClasses.Serializer;
+import allClasses.User;
 import javafx.animation.ScaleTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,16 +17,15 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class EnterNameController implements Initializable, Serializable {
+public class EnterNameExistingController implements Initializable, Serializable {
     @FXML
     private ImageView shade;
-//    @FXML
-//    private TextField text;
     @FXML
     private TextField nameText;
     @FXML
@@ -44,8 +45,18 @@ public class EnterNameController implements Initializable, Serializable {
     @FXML
     private void goToMainMenu(ActionEvent actionEvent) {
         String userName = nameText.getText();
-
-
+        User user = null;
+        try {
+            user = Serializer.deserialize(userName);
+        } catch (FileNotFoundException e){
+            // Wrong name
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        
+        Main.setCurrentUser(user);
         ScaleTransition close  = new ScaleTransition(Duration.seconds(1), shade);
         close.setByX(-78);
         close.setByY(-73);

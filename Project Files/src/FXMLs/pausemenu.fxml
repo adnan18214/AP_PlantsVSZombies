@@ -135,7 +135,7 @@
             <Image url="@../images/setting2.png" />
          </image>
       </ImageView>
-      <Button layoutX="482.0" layoutY="346.0" mnemonicParsing="false" prefHeight="11.0" prefWidth="75.0" scaleX="3.0" scaleY="3.0" stylesheets="@pausemenu.css" text="SAVE GAME">
+      <Button layoutX="482.0" layoutY="346.0" mnemonicParsing="false" onAction="#saveGame" prefHeight="11.0" prefWidth="75.0" scaleX="3.0" scaleY="3.0" stylesheets="@pausemenu.css" text="SAVE GAME">
          <font>
             <Font size="9.0" />
          </font></Button>

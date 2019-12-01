@@ -20,7 +20,7 @@
             <Image url="@../images/logo2.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="loadGame" fitHeight="54.0" fitWidth="345.0" layoutX="347.0" layoutY="330.0" onMouseEntered="#makeGlow" onMouseExited="#removeEffect" onMousePressed="#makeDark" onMouseReleased="#removeEffect" pickOnBounds="true" scaleY="2.0">
+      <ImageView fx:id="loadGame" fitHeight="54.0" fitWidth="345.0" layoutX="347.0" layoutY="330.0" onMouseEntered="#makeGlow" onMouseExited="#removeEffect" onMousePressed="#makeDark" onMouseReleased="#loadSavedGame" pickOnBounds="true" scaleY="2.0">
          <image>
             <Image url="@../images/loadGame.png" />
          </image>
