@@ -1,6 +1,7 @@
 package FXMLs;
 
 import allClasses.GameWorld;
+import allClasses.Lawn;
 import allClasses.Main;
 import allClasses.User;
 import javafx.animation.ScaleTransition;
@@ -118,7 +119,9 @@ public class pausemenuController implements Initializable, Serializable {
         HouseAndLawnParent h = l.getController();
         h.stopAnimations();
 
-        currentGame.setScene(lastScene);
+        currentGame.setLawn(Lawn.getLawn());
+        currentGame.setLevel(h.getLevel());
+        currentGame.setSuntokenCount(h.getSuntokenCount());
         currentUser.saveGame(currentGame);
 
         ScaleTransition close  = new ScaleTransition(Duration.seconds(1), shade);

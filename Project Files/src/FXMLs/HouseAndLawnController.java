@@ -77,6 +77,7 @@ public class HouseAndLawnController extends HouseAndLawnParent implements Initia
 
     public HouseAndLawnController()
     {
+        level = 1;
         allTempTransitions = new ParallelTransition();
         super.setAllTempTransitions(allTempTransitions);
         this.market.add(new PeaShooter(0,0, null, null));
@@ -310,6 +311,16 @@ public class HouseAndLawnController extends HouseAndLawnParent implements Initia
         allTempTransitions.stop();
     }
 
+    @Override
+    public int getSuntokenCount() {
+        return Integer.parseInt(sunTokenCount.getText());
+    }
+
+    @Override
+    public void setSuntokenCount(int s) {
+        sunTokenCount.setText(Integer.toString(s));
+    }
+
     private void youLostGame(){
         ScaleTransition close  = new ScaleTransition(Duration.seconds(1), shade);
         close.setByX(-78);
@@ -410,12 +421,10 @@ public class HouseAndLawnController extends HouseAndLawnParent implements Initia
                 // Generate sun tokens
                 SequentialTransition tokengen = s.generateTokens(sunTokenCount);
                 tokengen.setOnFinished(e->{
-                    removeFromAnimationGroup(tokengen);
                     tokengen.setDelay(Duration.seconds(ThreadLocalRandom.current().nextInt(5,8)));
                     if(s.getToken().getImage() == null)
                         s.getToken().setImage((new SunToken(sunTokenCount)).getSunImage());
                     tokengen.play();
-                    addToAnimationGroup(tokengen);
 
                     if(((Plant) s).isZombieAttacking())
                         ((Plant) s).detectCollisions(true);
@@ -423,7 +432,6 @@ public class HouseAndLawnController extends HouseAndLawnParent implements Initia
                         ((Plant) s).detectCollisions(false);
                 });
                 tokengen.play();
-                addToAnimationGroup(tokengen);
                 lawn.addPlant(s);
             }
             dragSuccessful = true;

@@ -24,6 +24,10 @@ public class Lawn implements Serializable {
         allLawnMowers = new ArrayList<>();
     }
 
+    /**
+     * To get an instance of Lawn implementing Singleton.
+     * @return
+     */
     public static Lawn getLawn()
     {
         if (lawn == null)

@@ -14,12 +14,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class PeaShooter extends Plant implements shooterPlant, Serializable {
-    private Image peaBullet;
-    private ImageView bulletIV;
-    private AnchorPane pane;
-    private PathTransition movingBullet;
-    private Timeline collider;
-    private final Bounds plantBounds;
+    private transient Image peaBullet;
+    private transient ImageView bulletIV;
+    private transient AnchorPane pane;
+    private transient PathTransition movingBullet;
+    private transient Timeline collider;
+    private transient final Bounds plantBounds;
 
     public PeaShooter(int x, int y, ArrayList zombies, ImageView plant){
         super(100, 100, x, y,"images/active_peashooter.png","images/inactive_peashooter.png", zombies);
@@ -108,6 +108,9 @@ public class PeaShooter extends Plant implements shooterPlant, Serializable {
         movingBullet = movePea;
     }
 
+    /**
+     * Stops animations and removes the plant.
+     */
     @Override
     public void killPlant() {
         collider.stop();
@@ -128,6 +131,10 @@ public class PeaShooter extends Plant implements shooterPlant, Serializable {
         pause.play();
     }
 
+    /**
+     * activates collision timeline.
+     * @param activate
+     */
     @Override
     public void detectCollisions(boolean activate) {
         if(activate)

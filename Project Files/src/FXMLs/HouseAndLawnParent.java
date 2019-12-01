@@ -6,6 +6,7 @@ import javafx.animation.ParallelTransition;
 import java.io.Serializable;
 
 public abstract class HouseAndLawnParent implements Serializable {
+    protected int level;
     protected static ParallelTransition allTempTransitions;
 
     public static void addToAnimationGroup(Animation a){
@@ -20,6 +21,12 @@ public abstract class HouseAndLawnParent implements Serializable {
         allTempTransitions = PT;
     }
 
+    protected int getLevel() {
+        return level;
+    }
+
     public abstract void resumeAnimations();
     public abstract void stopAnimations();
+    public abstract int getSuntokenCount();
+    public abstract void setSuntokenCount(int s);
 }

@@ -15,12 +15,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class SunFlower extends Plant implements Serializable {
-    private Text sunTokenCount;
-    private ImageView token;
-    private AnchorPane pane;
-    private SequentialTransition showingToken;
-    private Timeline collider;
-    private final Bounds plantBounds;
+    private transient Text sunTokenCount;
+    private transient ImageView token;
+    private transient AnchorPane pane;
+    private transient SequentialTransition showingToken;
+    private transient Timeline collider;
+    private transient final Bounds plantBounds;
 
     public SunFlower(int x, int y, Text sCount, ImageView targetIV, ArrayList zombies) {
         super(50, 100, x, y,"images/active_sunflower.png","images/inactive_sunflower.png", zombies);
@@ -66,6 +66,11 @@ public class SunFlower extends Plant implements Serializable {
         return dyingGIF;
     }
 
+    /**
+     * Creates animation for token generation.
+     * @param sunCounter
+     * @return
+     */
     public SequentialTransition generateTokens(Text sunCounter){
         SunToken sun = new SunToken(sunTokenCount);
         token  = sun.getSuntoken(plantIV.getParent().getLayoutX() + plantIV.getBoundsInParent().getCenterX(), plantIV.getParent().getLayoutY() + plantIV.getBoundsInParent().getCenterY());
@@ -94,6 +99,9 @@ public class SunFlower extends Plant implements Serializable {
         return showingToken;
     }
 
+    /**
+     * stops animations and removes the plant.
+     */
     @Override
     public void killPlant() {
         collider.stop();
@@ -114,6 +122,10 @@ public class SunFlower extends Plant implements Serializable {
         pause.play();
     }
 
+    /**
+     * activates collision detection animation.
+     * @param activate
+     */
     @Override
     public void detectCollisions(boolean activate) {
         if(activate)

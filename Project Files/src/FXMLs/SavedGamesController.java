@@ -90,13 +90,20 @@ public class SavedGamesController implements Initializable , Serializable {
         close1.setOnFinished((e)-> {
             Stage primaryStage = (Stage) shade.getScene().getWindow();
             try {
-                Scene currentScene = Main.getCurrentUser().getGame(0).getScene();
-                FXMLLoader l = (FXMLLoader) currentScene.getUserData();
-                HouseAndLawnParent h = l.getController();
-                h.resumeAnimations();
-
-                primaryStage.setScene(currentScene);
-            } catch (ArrayIndexOutOfBoundsException f){
+                int level = Main.getCurrentUser().getGame(0).getLevel();
+                FXMLLoader next = null;
+                switch(level){
+                    case 1: next = new FXMLLoader(getClass().getClassLoader().getResource("./FXMLs/houseAndLawn.fxml")); break;
+                    case 2: next = new FXMLLoader(getClass().getClassLoader().getResource("./FXMLs/houseAndLawn2.fxml")); break;
+                    case 3: next = new FXMLLoader(getClass().getClassLoader().getResource("./FXMLs/houseAndLawn3.fxml")); break;
+                    case 4: next = new FXMLLoader(getClass().getClassLoader().getResource("./FXMLs/houseAndLawn4.fxml")); break;
+                    case 5: next = new FXMLLoader(getClass().getClassLoader().getResource("./FXMLs/houseAndLawn5.fxml")); break;
+                }
+                Parent nParent = next.load();
+                Scene nextScene = new Scene(nParent);
+                next.<HouseAndLawnParent>getController().setSuntokenCount(Main.getCurrentUser().getGame(0).getSuntokenCount());
+                primaryStage.setScene(nextScene);
+            } catch (ArrayIndexOutOfBoundsException | IOException f){
                 // No game saved
             }
         });
@@ -114,13 +121,20 @@ public class SavedGamesController implements Initializable , Serializable {
         close2.setOnFinished((e)-> {
             Stage primaryStage = (Stage) shade.getScene().getWindow();
             try {
-                Scene currentScene = Main.getCurrentUser().getGame(1).getScene();
-                FXMLLoader l = (FXMLLoader) currentScene.getUserData();
-                HouseAndLawnParent h = l.getController();
-                h.resumeAnimations();
-
-                primaryStage.setScene(currentScene);
-            } catch (ArrayIndexOutOfBoundsException f){
+                int level = Main.getCurrentUser().getGame(1).getLevel();
+                FXMLLoader next = null;
+                switch(level){
+                    case 1: next = new FXMLLoader(getClass().getClassLoader().getResource("./FXMLs/houseAndLawn.fxml")); break;
+                    case 2: next = new FXMLLoader(getClass().getClassLoader().getResource("./FXMLs/houseAndLawn2.fxml")); break;
+                    case 3: next = new FXMLLoader(getClass().getClassLoader().getResource("./FXMLs/houseAndLawn3.fxml")); break;
+                    case 4: next = new FXMLLoader(getClass().getClassLoader().getResource("./FXMLs/houseAndLawn4.fxml")); break;
+                    case 5: next = new FXMLLoader(getClass().getClassLoader().getResource("./FXMLs/houseAndLawn5.fxml")); break;
+                }
+                Parent nParent = next.load();
+                Scene nextScene = new Scene(nParent);
+                next.<HouseAndLawnParent>getController().setSuntokenCount(Main.getCurrentUser().getGame(1).getSuntokenCount());
+                primaryStage.setScene(nextScene);
+            } catch (ArrayIndexOutOfBoundsException | IOException f){
                 // No game saved
             }
         });
@@ -138,13 +152,20 @@ public class SavedGamesController implements Initializable , Serializable {
         close3.setOnFinished((e)-> {
             Stage primaryStage = (Stage) shade.getScene().getWindow();
             try {
-                Scene currentScene = Main.getCurrentUser().getGame(2).getScene();
-                FXMLLoader l = (FXMLLoader) currentScene.getUserData();
-                HouseAndLawnParent h = l.getController();
-                h.resumeAnimations();
-
-                primaryStage.setScene(currentScene);
-            } catch (ArrayIndexOutOfBoundsException f){
+                int level = Main.getCurrentUser().getGame(2).getLevel();
+                FXMLLoader next = null;
+                switch(level){
+                    case 1: next = new FXMLLoader(getClass().getClassLoader().getResource("./FXMLs/houseAndLawn.fxml")); break;
+                    case 2: next = new FXMLLoader(getClass().getClassLoader().getResource("./FXMLs/houseAndLawn2.fxml")); break;
+                    case 3: next = new FXMLLoader(getClass().getClassLoader().getResource("./FXMLs/houseAndLawn3.fxml")); break;
+                    case 4: next = new FXMLLoader(getClass().getClassLoader().getResource("./FXMLs/houseAndLawn4.fxml")); break;
+                    case 5: next = new FXMLLoader(getClass().getClassLoader().getResource("./FXMLs/houseAndLawn5.fxml")); break;
+                }
+                Parent nParent = next.load();
+                Scene nextScene = new Scene(nParent);
+                next.<HouseAndLawnParent>getController().setSuntokenCount(Main.getCurrentUser().getGame(2).getSuntokenCount());
+                primaryStage.setScene(nextScene);
+            } catch (ArrayIndexOutOfBoundsException | IOException f){
                 // No game saved
             }
         });

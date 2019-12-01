@@ -9,11 +9,6 @@
 
 <AnchorPane prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXMLs.EnterNameCreateController">
    <children>
-      <ImageView fx:id="shade" fitHeight="768.0" fitWidth="1024.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/transition.png" />
-         </image>
-      </ImageView>
       <ImageView fitHeight="768.0" fitWidth="1024.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/bgLogin.jpg" />
@@ -35,5 +30,10 @@
       <Button layoutX="451.0" layoutY="492.0" mnemonicParsing="false" onAction="#goToMainMenu" prefHeight="44.0" prefWidth="121.0" stylesheets="@setButtonStyle.css" text="Create" />
       <TextField fx:id="nameText" layoutX="421.0" layoutY="389.0" prefHeight="26.0" prefWidth="192.0" styleClass="text-field" stylesheets="@setButtonStyle.css" />
       <Button layoutX="451.0" layoutY="560.0" mnemonicParsing="false" onAction="#goBackToLogin" prefHeight="44.0" prefWidth="121.0" stylesheets="@setButtonStyle.css" text="Back" />
+      <ImageView fx:id="shade" fitHeight="768.0" fitWidth="1024.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/transition.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

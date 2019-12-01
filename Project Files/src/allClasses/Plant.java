@@ -10,9 +10,9 @@ public abstract class Plant implements Serializable {
     protected final int X_COORDINATE;
     protected final int Y_COORDINATE;
     protected final ArrayList<Zombie> attackingZombies;
-    protected ImageView plantIV;
-    protected Image aliveGIF;
-    protected Image dyingGIF;
+    protected transient ImageView plantIV;
+    protected transient Image aliveGIF;
+    protected transient Image dyingGIF;
     private int health;
     private int cost;
     private boolean alive;

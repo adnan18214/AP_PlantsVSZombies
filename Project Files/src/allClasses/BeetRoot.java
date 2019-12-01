@@ -14,12 +14,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class BeetRoot extends Plant implements shooterPlant, Serializable {
-    private Image beetBullet;
-    private PathTransition movingBullet;
-    private ImageView bulletIV;
-    private AnchorPane pane;
-    private Timeline collider;
-    private final Bounds plantBounds;
+    private transient Image beetBullet;
+    private transient PathTransition movingBullet;
+    private transient ImageView bulletIV;
+    private transient AnchorPane pane;
+    private transient Timeline collider;
+    private transient final Bounds plantBounds;
 
     public BeetRoot(int x, int y, ArrayList zombies, ImageView plant){
         super(125, 100, x, y, "images/active_beetroot.png", "images/inactive_beetroot.png", zombies);
@@ -108,6 +108,9 @@ public class BeetRoot extends Plant implements shooterPlant, Serializable {
         movingBullet = moveBeet;
     }
 
+    /**
+     * Stops animations and removes the plant.
+     */
     @Override
     public void killPlant() {
         collider.stop();
@@ -137,17 +140,12 @@ public class BeetRoot extends Plant implements shooterPlant, Serializable {
                 }
             }
         }
-//        for (int i = 0; i < attackingZombies.size(); i++) {
-//            Zombie frontZombie = attackingZombies.get(i);
-//            if (plantBounds.intersects(frontZombie.getZombieIV().getBoundsInParent())){
-//                i--;
-//                frontZombie.stopZombie();
-//                frontZombie.killZombie();
-//            }
-//        }
-
     }
 
+    /**
+     * Activates the collision detection timeline.
+     * @param activate
+     */
     @Override
     public void detectCollisions(boolean activate) {
         if(activate)

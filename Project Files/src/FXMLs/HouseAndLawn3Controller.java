@@ -80,6 +80,7 @@ public class HouseAndLawn3Controller extends HouseAndLawnParent implements Initi
 
     public HouseAndLawn3Controller()
     {
+        level = 3;
         allTempTransitions = new ParallelTransition();
         super.setAllTempTransitions(allTempTransitions);
         this.market.add(new PeaShooter(0,0, null, null));
@@ -491,5 +492,15 @@ public class HouseAndLawn3Controller extends HouseAndLawnParent implements Initi
     private void activateShovelAction(MouseEvent mouseEvent) {
         shovelActivated = true;
 
+    }
+
+    @Override
+    public int getSuntokenCount() {
+        return Integer.parseInt(sunTokenCount.getText());
+    }
+
+    @Override
+    public void setSuntokenCount(int s) {
+        sunTokenCount.setText(Integer.toString(s));
     }
 }

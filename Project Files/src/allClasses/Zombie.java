@@ -18,9 +18,9 @@ public class Zombie implements Serializable
     private boolean alive;
     private int row;
     private int health;
-    private ImageView zombieIV;
-    private PathTransition movement;
-    private AnchorPane animationLayer;
+    private transient ImageView zombieIV;
+    private transient PathTransition movement;
+    private transient AnchorPane animationLayer;
 
     public Zombie(ImageView z, double x, double y, int r, AnchorPane animationLayer, int health)
     {
@@ -42,6 +42,10 @@ public class Zombie implements Serializable
         return zombieIV;
     }
 
+    /**
+     * to inflict damage to the zombie
+     * @param damage
+     */
     public void attackZombie(int damage){
         health -= damage;
         if(health < 0) {
@@ -62,6 +66,9 @@ public class Zombie implements Serializable
         this.movement = movement;
     }
 
+    /**
+     * stops all zombie animations and removes it from the pane.
+     */
     public void killZombie(){
         Lawn lawn = Lawn.getLawn();
 

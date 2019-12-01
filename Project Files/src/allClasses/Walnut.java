@@ -14,9 +14,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class Walnut extends Plant implements Serializable {
 
     private int halfHealth;
-    private Image halfHealthGIF;
-    private Timeline collider;
-    private final Bounds plantBounds;
+    private transient Image halfHealthGIF;
+    private transient Timeline collider;
+    private transient final Bounds plantBounds;
 
 
     public Walnut(int x, int y, ArrayList zombies, ImageView plant) {
@@ -73,6 +73,9 @@ public class Walnut extends Plant implements Serializable {
         return dyingGIF;
     }
 
+    /**
+     * stops animations and removes the plant.
+     */
     @Override
     public void killPlant() {
         collider.stop();
@@ -89,6 +92,10 @@ public class Walnut extends Plant implements Serializable {
         pause.play();
     }
 
+    /**
+     * activates collision detection animation.
+     * @param activate
+     */
     @Override
     public void detectCollisions(boolean activate) {
         if(activate)

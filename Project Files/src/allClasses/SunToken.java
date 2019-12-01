@@ -7,8 +7,8 @@ import javafx.scene.text.Text;
 import java.io.Serializable;
 
 public class SunToken implements Serializable {
-    private Image sun;
-    private Text sunTokenCount;
+    private transient Image sun;
+    private transient Text sunTokenCount;
 
 
     public SunToken(Text sCount){
@@ -16,6 +16,12 @@ public class SunToken implements Serializable {
         sun = new Image("images/sunToken.gif");
     }
 
+    /**
+     * Creates a suntoken image to be placed on the plane.
+     * @param x
+     * @param y
+     * @return
+     */
     public ImageView getSuntoken(double x, double y){
         ImageView sunToken = new ImageView(sun);
         sunToken.setX(x);
@@ -24,7 +30,7 @@ public class SunToken implements Serializable {
         sunToken.setFitHeight(58);
 
         sunToken.setOnMouseClicked((e)-> {
-            if(sunToken.getImage() != null || sunToken.getOpacity() != 0) {
+            if(sunToken.getImage() != null || sunToken.getOpacity() > 0.5) {
                 sunToken.setImage(null);
                 int count = Integer.parseInt(sunTokenCount.getText());
                 count += 50;

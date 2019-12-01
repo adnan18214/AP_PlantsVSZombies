@@ -13,11 +13,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class lawnMower implements Serializable {
-    private ImageView lawnMowerIV;
-    private PathTransition moveLM;
+    private transient ImageView lawnMowerIV;
+    private transient PathTransition moveLM;
     private ArrayList<Zombie> attackingZombies;
-    private Timeline collider;
-    private final Bounds LMBounds;
+    private transient Timeline collider;
+    private transient final Bounds LMBounds;
 
     public lawnMower(ImageView LMIV, ArrayList zombies){
 
@@ -38,6 +38,10 @@ public class lawnMower implements Serializable {
         collider.play();
     }
 
+    /**
+     * Creates an animation of the lawn mower.
+     * @param LM
+     */
     private void animationLawnMower(ImageView LM){
         moveLM = new PathTransition();
         Line lmPath = new Line(LM.getX()+20, LM.getY()+30, LM.getX()+1400, LM.getY()+30);
@@ -50,6 +54,9 @@ public class lawnMower implements Serializable {
         });
     }
 
+    /**
+     * starts/stops LawnMower attack.
+     */
     public void triggerLM(){
         moveLM.play();
         while(!attackingZombies.isEmpty()){
