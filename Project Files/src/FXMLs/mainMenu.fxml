@@ -7,11 +7,6 @@
 
 <AnchorPane prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXMLs.mainMenuController">
    <children>
-      <ImageView fx:id="shade" blendMode="MULTIPLY" fitHeight="768.0" fitWidth="1024.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/transition.png" />
-         </image>
-      </ImageView>
       <ImageView fitHeight="768.0" fitWidth="1024.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/bgLogin.jpg" />
@@ -48,6 +43,11 @@
       <ImageView fx:id="logOut" fitHeight="106.0" fitWidth="345.0" layoutX="347.0" layoutY="629.0" onMouseEntered="#makeGlow" onMouseExited="#removeEffect" onMousePressed="#makeDark" onMouseReleased="#logOut" pickOnBounds="true">
          <image>
             <Image url="@../images/logOut.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="shade" blendMode="MULTIPLY" fitHeight="768.0" fitWidth="1024.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/transition.png" />
          </image>
       </ImageView>
    </children>

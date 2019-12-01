@@ -49,7 +49,13 @@ public class EnterNameExistingController implements Initializable, Serializable 
         try {
             user = Serializer.deserialize(userName);
         } catch (FileNotFoundException e){
-            // Wrong name
+            try {
+                Parent next = FXMLLoader.load(getClass().getClassLoader().getResource("./FXMLs/UserNotFound.fxml"));
+                Stage primaryStage = (Stage) shade.getScene().getWindow();
+                primaryStage.setScene(new Scene(next));
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {

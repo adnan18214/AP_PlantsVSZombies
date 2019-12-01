@@ -25,13 +25,13 @@ public class GameOverController implements Initializable, Serializable
         public GameOverController() {
             PauseTransition pause = new PauseTransition(Duration.seconds(5));
             pause.setOnFinished(e -> {
-                goToSelectPlayerMenu();
+                goToMainMenu();
             });
             pause.play();
             pause.setCycleCount(1);
         }
 
-        private void goToSelectPlayerMenu() {
+        private void goToMainMenu() {
             ScaleTransition close  = new ScaleTransition(Duration.seconds(1), shade);
             close.setByX(-78);
             close.setByY(-73);

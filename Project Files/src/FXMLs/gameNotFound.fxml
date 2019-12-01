@@ -5,8 +5,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane maxHeight="786.0" maxWidth="1024.0" prefHeight="786.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="">
+<AnchorPane maxHeight="786.0" maxWidth="1024.0" prefHeight="786.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXMLs.GameNotFoundController">
    <children>
       <ImageView fitHeight="786.0" fitWidth="1024.0" pickOnBounds="true" preserveRatio="true" scaleY="1.06">
          <image>
@@ -24,6 +23,11 @@
       <ImageView fitHeight="132.0" fitWidth="397.0" layoutX="327.0" layoutY="96.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/logo2.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="shade" fitHeight="786.0" fitWidth="1024.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true">
+         <image>
+            <Image url="@../images/transition.png" />
          </image>
       </ImageView>
    </children>

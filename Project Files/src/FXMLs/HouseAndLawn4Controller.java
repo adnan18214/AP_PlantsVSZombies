@@ -27,6 +27,7 @@ import java.util.Objects;
 import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class HouseAndLawn4Controller extends HouseAndLawnParent implements Initializable, Serializable {
@@ -80,6 +81,7 @@ public class HouseAndLawn4Controller extends HouseAndLawnParent implements Initi
 
     public HouseAndLawn4Controller()
     {
+        level = 4;
         allTempTransitions = new ParallelTransition();
         super.setAllTempTransitions(allTempTransitions);
         this.market.add(new PeaShooter(0,0, null, null));
@@ -150,7 +152,6 @@ public class HouseAndLawn4Controller extends HouseAndLawnParent implements Initi
         appearToken.play();
 
         moveSun.setOnFinished(e -> {
-            update();
             double newX = ThreadLocalRandom.current().nextDouble(200,850);
             moveSun.setPath(new Line(newX, y+10, newX, y+800));
             moveSun.setDelay(Duration.seconds(ThreadLocalRandom.current().nextInt(5,10)));
@@ -165,7 +166,7 @@ public class HouseAndLawn4Controller extends HouseAndLawnParent implements Initi
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        AtomicReference<Boolean> flag1 = new AtomicReference<>(false);
+        AtomicInteger count = new AtomicInteger();
         AtomicReference<Boolean> flag2 = new AtomicReference<>(true);
 
         shovelActivated = false;
@@ -182,7 +183,7 @@ public class HouseAndLawn4Controller extends HouseAndLawnParent implements Initi
         lawn.addLawnMower(lawnMower5, 5);
 
         zombieAnimation = new Timeline(new KeyFrame(Duration.seconds(6), (e)-> {
-            flag1.set(true);
+            count.getAndIncrement();
             int sel = rand.nextInt((2));
             if (sel == 0) {
                 animateZombie(new LocalZombie(), 1100);
@@ -195,6 +196,7 @@ public class HouseAndLawn4Controller extends HouseAndLawnParent implements Initi
 
         countDown.setText(timeSeconds.toString());
         counter = new Timeline(new KeyFrame(Duration.seconds(1), actionEvent -> {
+            update();
             countDown.setText(timeSeconds.toString());
             timeSeconds--;
             if(timeSeconds < 0){
@@ -214,7 +216,7 @@ public class HouseAndLawn4Controller extends HouseAndLawnParent implements Initi
                     }
                 }
             }
-            if (flag1.get() && flag2.get()) {
+            if (count.get() == 10 && flag2.get()) {
                 stopAnimations();
                 youWin();
             }
@@ -323,6 +325,16 @@ public class HouseAndLawn4Controller extends HouseAndLawnParent implements Initi
         moveSun.stop();
         counter.stop();
         allTempTransitions.stop();
+    }
+
+    @Override
+    public int getSuntokenCount() {
+        return Integer.parseInt(sunTokenCount.getText());
+    }
+
+    @Override
+    public void setSuntokenCount(int s) {
+        sunTokenCount.setText(Integer.toString(s));
     }
 
     private void youLostGame(){
@@ -435,12 +447,10 @@ public class HouseAndLawn4Controller extends HouseAndLawnParent implements Initi
                     // Generate sun tokens
                     SequentialTransition tokengen = s.generateTokens(sunTokenCount);
                     tokengen.setOnFinished(e->{
-                        removeFromAnimationGroup(tokengen);
                         tokengen.setDelay(Duration.seconds(ThreadLocalRandom.current().nextInt(5,8)));
                         if(s.getToken().getImage() == null)
                             s.getToken().setImage((new SunToken(sunTokenCount)).getSunImage());
                         tokengen.play();
-                        addToAnimationGroup(tokengen);
 
                         if(((Plant) s).isZombieAttacking())
                             ((Plant) s).detectCollisions(true);
@@ -448,7 +458,6 @@ public class HouseAndLawn4Controller extends HouseAndLawnParent implements Initi
                             ((Plant) s).detectCollisions(false);
                     });
                     tokengen.play();
-                    addToAnimationGroup(tokengen);
                     lawn.addPlant(s);
                 }
             }
