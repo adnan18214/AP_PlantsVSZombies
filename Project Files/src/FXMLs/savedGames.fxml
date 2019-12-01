@@ -9,11 +9,6 @@
 
 <AnchorPane prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXMLs.SavedGamesController">
    <children>
-      <ImageView fx:id="shade" fitHeight="768.0" fitWidth="1024.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/transition.png" />
-         </image>
-      </ImageView>
       <ImageView fitHeight="768.0" fitWidth="1024.0">
          <image>
             <Image url="@../images/Levelbg.png" />
@@ -46,5 +41,10 @@
          </image>
       </ImageView>
       <Button layoutX="471.0" layoutY="596.0" mnemonicParsing="false" onAction="#goBackToMainMenu" prefHeight="39.0" prefWidth="99.0" stylesheets="@setButtonStyle.css" text="Back" />
+      <ImageView fx:id="shade" fitHeight="768.0" fitWidth="1024.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/transition.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
